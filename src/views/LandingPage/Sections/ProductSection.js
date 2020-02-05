@@ -151,8 +151,8 @@ function QontoStepIcon(props) {
       {completed ? (
         <Check className={classes.completed} />
       ) : (
-        <div className={classes.circle} />
-      )}
+          <div className={classes.circle} />
+        )}
     </div>
   );
 }
@@ -182,22 +182,14 @@ export default function ProductSection() {
   const [achID, setAchID] = React.useState([1]);
   const [projID, setProjID] = React.useState([1]);
   const [loading, setLoading] = React.useState(0);
-  const [data, setData] = React.useState({
-    profile_name: "",
-    profile_pic_url: "",
-    about_me: "",
-    social: { linkedin_url: "", github_url: "", email: "" },
-    current_location: "",
-    skill_desc: "",
-    skills: [],
-    testimonials: [],
-    lang: [],
-    publication: [],
-    experience: [],
-    education: [],
-    achievements: [],
-    projects: []
-  });
+
+  const [profileName, setProfileName] = React.useState("");
+  const [aboutMe, setAboutMe] = React.useState("");
+  const [linkedInLink, setLinkedIn] = React.useState("");
+  const [githubLink, setGithub] = React.useState("");
+  const [emailLink, setEmail] = React.useState("");
+
+  const [skills, setSKills] = React.useState([{ description: "", level: "" }]);
 
   const [profile, setProfile] = React.useState({
     image: "",
@@ -226,10 +218,12 @@ export default function ProductSection() {
   const addSkill = () => {
     var skillNum = skillID.length + 1;
     setSkillID(oldArray => [...oldArray, skillNum]);
+    skills.push({ description: "", level: "" });
   };
 
   const deleteSkill = id => {
     setSkillID(skillID.filter(e => e !== id));
+    skills.slice();
   };
 
   const addTest = () => {
@@ -319,6 +313,33 @@ export default function ProductSection() {
       .then(setLoading(0));
   };
 
+  const handleChangeName = event => {
+    setProfileName(event.target.value);
+  };
+
+  const handleChangeAbout = event => {
+    setAboutMe(event.target.value);
+  };
+
+  const handleLinkedIn = event => {
+    setLinkedIn(event.target.value);
+  };
+
+  const handleGithub = event => {
+    setGithub(event.target.value);
+  };
+
+  const handleEmail = event => {
+    setEmail(event.target.value);
+  };
+
+  const handleSkills = (field, id, event) => {
+    const newSkills = skills;
+    newSkills[id].description = skills[id].description + event.target.value;
+    setSKills(newSkills);
+    console.log(skills);
+  };
+
   return (
     <div className={classes.section} id="top">
       <GridContainer justify="center">
@@ -328,8 +349,8 @@ export default function ProductSection() {
           ) : activeStep === 1 ? (
             <h2 className={classes.title}>Showcase your Skills.</h2>
           ) : (
-            <h2 className={classes.title}>Almost Done!</h2>
-          )}
+                <h2 className={classes.title}>Almost Done!</h2>
+              )}
           <Stepper
             alternativeLabel
             activeStep={activeStep}
@@ -359,6 +380,8 @@ export default function ProductSection() {
                             shrink: true
                           }}
                           variant="outlined"
+                          value={profileName}
+                          onChange={handleChangeName}
                         />
                         <TextField
                           label="About Me"
@@ -368,6 +391,8 @@ export default function ProductSection() {
                           rows="8"
                           placeholder="Tell us about yourself"
                           variant="outlined"
+                          value={aboutMe}
+                          onChange={handleChangeAbout}
                         />
                       </GridItem>
                       <GridItem xs={12} sm={12} md={4}>
@@ -389,18 +414,18 @@ export default function ProductSection() {
                         ) : profile.imageURL === "1" ? (
                           <h4>Loading</h4>
                         ) : (
-                          <img
-                            src={profile.imageURL}
-                            className={classes.imageRaised}
-                            alt="placeholder"
-                            style={{
-                              width: "150px",
-                              margin: "auto",
-                              marginTop: "30px",
-                              marginBottom: "20px"
-                            }}
-                          />
-                        )}
+                              <img
+                                src={profile.imageURL}
+                                className={classes.imageRaised}
+                                alt="placeholder"
+                                style={{
+                                  width: "150px",
+                                  margin: "auto",
+                                  marginTop: "30px",
+                                  marginBottom: "20px"
+                                }}
+                              />
+                            )}
 
                         <br />
                         <div style={{ textAlign: "center" }}>
@@ -431,6 +456,8 @@ export default function ProductSection() {
                           variant="outlined"
                           placeholder="LinkedIn link"
                           fullWidth
+                          value={linkedInLink}
+                          onChange={handleLinkedIn}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -452,6 +479,8 @@ export default function ProductSection() {
                           variant="outlined"
                           placeholder="Github link"
                           fullWidth
+                          value={githubLink}
+                          onChange={handleGithub}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -472,6 +501,8 @@ export default function ProductSection() {
                           variant="outlined"
                           placeholder="Email Id"
                           fullWidth
+                          value={emailLink}
+                          onChange={handleEmail}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -496,7 +527,11 @@ export default function ProductSection() {
                     <h2 style={{ color: "black" }}>Skills</h2>
                     {skillID.map(id => (
                       // eslint-disable-next-line react/jsx-key
-                      <GridContainer id={id} className={classes.contentCard}>
+                      <GridContainer
+                        id={id}
+                        className={classes.contentCard}
+                        key={id}
+                      >
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.numbering}>{id}.</h2>
                         </GridItem>
@@ -519,6 +554,10 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleSkills("description", id - 1, e);
+                            }}
+                            value={skills[id - 1].description}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
