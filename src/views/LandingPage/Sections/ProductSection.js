@@ -38,7 +38,7 @@ import Slide from "@material-ui/core/Slide";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import InfoArea from "components/InfoArea/InfoArea.js";
-import PropTypes from "prop-types";
+import PropTypes, { array } from "prop-types";
 import clsx from "clsx";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -175,38 +175,83 @@ function getSteps() {
 
 export default function ProductSection() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(1);
-  const [skillID, setSkillID] = React.useState([1]);
-  const [testID, setTestID] = React.useState([1]);
-  const [langID, setLangID] = React.useState([1]);
-  const [pubID, setPubID] = React.useState([1]);
-  const [expID, setExpID] = React.useState([1]);
-  const [eduID, setEduID] = React.useState([1]);
-  const [achID, setAchID] = React.useState([1]);
-  const [projID, setProjID] = React.useState([1]);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [loading, setLoading] = React.useState(0);
 
   const [profileName, setProfileName] = React.useState("");
+  const [profile, setProfile] = React.useState({
+    image: "",
+    imageURL: "",
+    progress: 0
+  });
   const [aboutMe, setAboutMe] = React.useState("");
   const [linkedInLink, setLinkedIn] = React.useState("");
   const [githubLink, setGithub] = React.useState("");
   const [emailLink, setEmail] = React.useState("");
   const [twitterLink, setTwitter] = React.useState("");
   const [stackLink, setStack] = React.useState("");
-  
+
+  const [skills, setSkills] = React.useState([
+    { id: 1, skill_name: "", skill_level: "Beginner" }
+  ]);
+  const [tests, setTests] = React.useState([
+    { id: 1, testimonial_name: "", testimonial_cred: "", testimonial_desc: "" }
+  ]);
+  const [langs, setLangs] = React.useState([
+    { id: 1, name: "", level: "Native Speaker" }
+  ]);
+
+  const [pubs, setPubs] = React.useState([
+    {
+      id: 1,
+      title: "",
+      journal_name: "",
+      supervisor: "",
+      publish_date: new Date("2014-08-18T21:11:54"),
+      article_link: ""
+    }
+  ]);
+  const [exps, setExps] = React.useState([
+    {
+      id: 1,
+      company_url: "",
+      position: "",
+      company: "",
+      timeline: { start: new Date("2014-08-18T21:11:54"), end: new Date("2014-08-18T21:11:54") },
+      summary: ""
+    }
+  ]);
+  const [edus, setEdus] = React.useState([
+    {
+      id: 1,
+      college_name: "",
+      degree_name: "",
+      college_url: "",
+      summary: "",
+      timeline: { start: new Date("2014-08-18T21:11:54"), end: new Date("2014-08-18T21:11:54") }
+    }
+  ]);
+  const [achs, setAchs] = React.useState([
+    {
+      id: 1,
+      achievement_title: "",
+      achievement_description: "",
+      achievement_date: new Date("2014-08-18T21:11:54"),
+      achievement_url: ""
+    }
+  ]);
+  const [pros, setPros] = React.useState([
+    {
+      id: 1,
+      git_url: "",
+      title: "",
+      proj_image: "",
+      proj_desc: "",
+      proj_demo: ""
+    }
+  ]);
 
 
-  const [skills, setSkills] = React.useState([{ description: "", level: "" }]);
-
-  const [profile, setProfile] = React.useState({
-    image: "",
-    imageURL: "",
-    progress: 0
-  });
-
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
-  );
   const steps = getSteps();
 
   const handleNext = (e) => {
@@ -223,89 +268,107 @@ export default function ProductSection() {
   };
 
   const addSkill = () => {
-    var skillNum = skillID.length + 1;
-    setSkillID(oldArray => [...oldArray, skillNum]);
-    skills.push({ description: "", level: "" });
+    var skillNum = skills.length + 1;
+    setSkills(oldArray => {
+      return [...oldArray, { id: skillNum, skill_name: "", skill_level: "Beginner" }]
+    });
+    console.log(skills)
   };
 
   const deleteSkill = id => {
-    setSkillID(skillID.filter(e => e !== id));
-    skills.slice();
+    setSkills(skills.filter(e => e.id !== id));
   };
 
   const addTest = () => {
-    var testNum = testID.length + 1;
-    setTestID(oldArray => [...oldArray, testNum]);
-  };
+    var testNum = tests.length + 1;
+    setTests(oldArray => {
+      return [...oldArray, { id: testNum, testimonial_name: "", testimonial_cred: "", testimonial_desc: "" }]
+    });
+    console.log(tests)
+    };
 
   const deleteTest = id => {
-    setTestID(testID.filter(e => e !== id));
+    setTests(tests.filter(e => e.id !== id));
   };
 
   const addLang = () => {
-    var langNum = langID.length + 1;
-    setLangID(oldArray => [...oldArray, langNum]);
+    var langNum = langs.length + 1;
+    setLangs(oldArray => {
+      return [...oldArray, {id: langNum , name: "", level: "Native Speaker" } ]
+    });
+    console.log(langs)  
   };
 
   const deleteLang = id => {
-    setLangID(langID.filter(e => e !== id));
+    setLangs(langs.filter(e => e.id !== id));
   };
 
   const addPub = () => {
-    var pubNum = pubID.length + 1;
-    setPubID(oldArray => [...oldArray, pubNum]);
-  };
+    var pubNum = pubs.length + 1;
+    setPubs(oldArray => {
+      return [...oldArray, {id:pubNum, title: "", journal_name: "", supervisor: "", publish_date: new Date("2014-08-18T21:11:54"), article_link: ""}]
+    });
+    console.log(pubs)  };
 
   const deletePub = id => {
-    setPubID(pubID.filter(e => e !== id));
+    setPubs(pubs.filter(e => e.id !== id));
   };
 
   const addExp = () => {
-    var expNum = expID.length + 1;
-    setExpID(oldArray => [...oldArray, expNum]);
-  };
+    var expNum = exps.length + 1;
+    setExps(oldArray => {
+      return [...oldArray, {id:expNum, company_url: "", position: "", company: "", timeline: {start: new Date("2014-08-18T21:11:54"), end: new Date("2014-08-18T21:11:54")}, summary: "" }]
+    });
+    console.log(exps)  };  
 
   const deleteExp = id => {
-    setExpID(expID.filter(e => e !== id));
+    setExps(exps.filter(e => e.id !== id));
   };
 
   const addEdu = () => {
-    var eduNum = eduID.length + 1;
-    setEduID(oldArray => [...oldArray, eduNum]);
-  };
+    var eduNum = edus.length + 1;
+    setEdus(oldArray => {
+      return [...oldArray, {id:eduNum, college_name: "", degree_name: "", college_url: "", summary: "", timeline: {start: new Date("2014-08-18T21:11:54"), end: new Date("2014-08-18T21:11:54")} }]
+    });
+    console.log(edus)  };  
 
   const deleteEdu = id => {
-    setEduID(eduID.filter(e => e !== id));
+    setEdus(edus.filter(e => e.id !== id));
   };
 
   const addAch = () => {
-    var achNum = achID.length + 1;
-    setAchID(oldArray => [...oldArray, achNum]);
-  };
+    var achNum = achs.length + 1;
+    setAchs(oldArray => {
+      return [...oldArray, {id:achNum, achievement_title: "", achievement_description: "", achievement_date: new Date("2014-08-18T21:11:54"), achievement_url: "" }]
+    });
+    console.log(achs)  };  
 
   const deleteAch = id => {
-    setAchID(achID.filter(e => e !== id));
+    setAchs(achs.filter(e => e.id !== id));
   };
 
   const addProj = () => {
-    var projNum = projID.length + 1;
-    setProjID(oldArray => [...oldArray, projNum]);
-  };
+    var projNum = pros.length + 1;
+    setPros(oldArray => {
+      return [...oldArray, {id:projNum, git_url: "", title: "", proj_image: "", proj_desc: "", proj_demo: "" }]
+    });
+    console.log(pros)  };  
 
   const deleteProj = id => {
-    setProjID(projID.filter(e => e !== id));
+    setPros(pros.filter(e => e.id !== id));
   };
 
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
+  // const handleDateChangePub = date => {
+  //   setSelectedDatePub(date);
+  //   console.log(date);
+  // };
 
-  const handleUploadStart = () => {
+  const handleUploadProfileStart = () => {
     setLoading(1);
     setProfile({ imageURL: "1" });
   };
 
-  const handleUploadSuccess = filename => {
+  const handleUploadProfileSuccess = filename => {
     setProfile({
       image: filename,
       progress: 100
@@ -319,6 +382,8 @@ export default function ProductSection() {
       .then(url => setProfile({ imageURL: url }))
       .then(setLoading(0));
   };
+
+
 
   const handleChangeName = event => {
     setProfileName(event.target.value);
@@ -347,11 +412,136 @@ export default function ProductSection() {
     setStack(event.target.value);
   };
 
-  const handleSkills = (field, id, event) => {
-    const newSkills = skills;
-    // newSkills[id].description = event.target.value;
-    setSkills(skills[id].description = event.target.value);
-    console.log(skills);
+  const handleSkills = (field, id, evn) => {
+    if (field === "skill_name") {
+      setSkills([...skills.slice(0, id), {...skills[id], skill_name : evn.target.value}]);
+    }
+    if (field === "skill_level") {
+      setSkills([...skills.slice(0, id), {...skills[id], skill_level : evn.target.value}]);
+    }
+
+  };
+
+  const handleTests = (field, id, evn) => {
+    if (field === "testimonial_name") {
+      setTests([...tests.slice(0, id), {...tests[id], testimonial_name : evn.target.value}]);
+    }
+    if (field === "testimonial_cred") {
+      setTests([...tests.slice(0, id), {...tests[id], testimonial_cred : evn.target.value}]);
+    }
+    if (field === "testimonial_desc") {
+      setTests([...tests.slice(0, id), {...tests[id], testimonial_desc : evn.target.value}]);
+    }
+
+  };
+
+  const handleLangs = (field, id, evn) => {
+    if (field === "name") {
+      setLangs([...langs.slice(0, id), {...langs[id], name : evn.target.value}]);
+    }
+    if (field === "level") {
+      setLangs([...langs.slice(0, id), {...langs[id], level : evn.target.value}]);
+    }
+
+  };
+
+  const handlePubs = (field, id, evn) => {
+    if (field === "title") {
+      setPubs([...pubs.slice(0, id), {...pubs[id], title: evn.target.value}]);
+    }
+    if (field === "journal_name") {
+      setPubs([...pubs.slice(0, id), {...pubs[id], journal_name : evn.target.value}]);
+    }
+    if (field === "supervisor") {
+      setPubs([...pubs.slice(0, id), {...pubs[id], supervisor : evn.target.value}]);
+    }
+    if (field === "publish_date") {
+      setPubs([...langs.slice(0, id), {...pubs[id], publish_date : evn}]);
+    }
+    if (field === "article_link") {
+      setPubs([...pubs.slice(0, id), {...pubs[id], article_link : evn.target.value}]);
+    }
+
+  };
+
+  const handleExps = (field, id, evn) => {
+    if (field === "company_url") {
+      setExps([...exps.slice(0, id), {...exps[id],  company_url : evn.target.value}]);
+    }
+    if (field === "position") {
+      setExps([...exps.slice(0, id), {...exps[id], position : evn.target.value}]);
+    }
+    if (field === "company") {
+      setExps([...exps.slice(0, id), {...exps[id], company : evn.target.value}]);
+    }
+    if (field === "start") {
+      setExps([...exps.slice(0, id), {...exps[id], timeline : {start: evn}}]);
+    }
+    if (field === "end") {
+      setExps([...exps.slice(0, id), {...exps[id], timeline : {end: evn}}]);
+    }
+    if (field === "summary") {
+      setExps([...exps.slice(0, id), {...exps[id], summary : evn.target.value}]);
+    }
+
+  };
+
+  const handleEdus = (field, id, evn) => {
+    if (field === "college_name") {
+      setEdus([...edus.slice(0, id), {...edus[id], college_name : evn.target.value}]);
+    }
+    if (field === "degree_name") {
+      setEdus([...edus.slice(0, id), {...edus[id], degree_name : evn.target.value}]);
+    }
+    if (field === "college_url") {
+      setEdus([...edus.slice(0, id), {...edus[id], college_url : evn.target.value}]);
+    }
+    if (field === "summary") {
+      setEdus([...edus.slice(0, id), {...edus[id], summary : evn.target.value}]);
+    }
+    if (field === "start") {
+      setEdus([...edus.slice(0, id), {...edus[id], timeline : {start: evn}}]);
+    }
+    if (field === "end") {
+      setEdus([...edus.slice(0, id), {...edus[id], timeline : {end: evn}}]);
+    }
+
+  };
+
+  const handleAchs = (field, id, evn) => {
+    if (field === "achievement_title") {
+      setAchs([...achs.slice(0, id), {...achs[id], achievement_title : evn.target.value}]);
+    }
+    if (field === "achievement_description") {
+      setAchs([...achs.slice(0, id), {...achs[id], achievement_description : evn.target.value}]);
+    }
+    if (field === "achievement_date") {
+      setAchs([...achs.slice(0, id), {...achs[id], achievement_date : evn}]);
+    }
+    if (field === "achievement_url") {
+      setAchs([...achs.slice(0, id), {...achs[id], achievement_url : evn.target.value}]);
+    }
+
+  };
+
+  const handlePros = (field, id, evn) => {
+    if (field === "git_url") {
+      setPros([...pros.slice(0, id), {...pros[id], git_url : evn.target.value}]);
+    }
+    if (field === "title") {
+      setPros([...pros.slice(0, id), {...pros[id], title : evn.target.value}]);
+    }
+    if (field === "proj_desc") {
+      setPros([...pros.slice(0, id), {...pros[id], proj_desc : evn.target.value}]);
+    }
+    if (field === "proj_demo") {
+      setPros([...pros.slice(0, id), {...pros[id], proj_demo : evn.target.value}]);
+    }
+    if (field === "proj_image") {
+      console.log(evn.target.files[0])
+      setPros([...pros.slice(0, id), {...pros[id], proj_image : ""}]);
+    }
+
   };
 
   return (
@@ -451,11 +641,10 @@ export default function ProductSection() {
                           <FileUploader
                             accept="images/*"
                             name="image"
-                            
                             style={{ marginLeft: "30%" }}
                             storageRef={firebase.storage().ref("profile")}
-                            onUploadStart={handleUploadStart}
-                            onUploadSuccess={handleUploadSuccess}
+                            onUploadStart={handleUploadProfileStart}
+                            onUploadSuccess={handleUploadProfileSuccess}
                           />
                         </div>
                       </GridItem>
@@ -625,21 +814,21 @@ export default function ProductSection() {
                 <div>
                   <ThemeProvider theme={theme} className={classes.contentCard}>
                     <h2 style={{ color: "black" }}>Skills</h2>
-                    {skillID.map(id => (
+                    {skills.map(el => (
                       // eslint-disable-next-line react/jsx-key
                       <GridContainer
-                        id={id}
+                        id={el.id}
                         className={classes.contentCard}
-                        key={id}
+                        key={el.id}
                       >
                         <GridItem xs={12} sm={12} md={12}>
-                          <h2 className={classes.numbering}>{id}.</h2>
+                          <h2 className={classes.numbering}>{el.id}.</h2>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.delete}>
                             <Button
                               color="secondary"
-                              onClick={() => deleteSkill(id)}
+                              onClick={() => deleteSkill(el.id)}
                             >
                               <img src={cancel} style={{ width: "30px" }} />
                             </Button>
@@ -656,20 +845,25 @@ export default function ProductSection() {
                             fullWidth
                             margin="normal"
                             onChange={e => {
-                              handleSkills("description", id - 1, e);
+                              handleSkills("skill_name", el.id - 1, e);
                             }}
-                            value={skills[id - 1].description}
+                            value={skills[el.id -1].skill_name}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
                           <Select
                             id="demo-simple-select"
                             className={classes.select}
+                            value={skills[el.id - 1].skill_level}
+                            onChange={e => {
+                              handleSkills("skill_level", el.id - 1, e);
+                            }}
+                            
                           >
-                            <MenuItem value={10}>Beginner</MenuItem>
-                            <MenuItem value={20}>Intermediate</MenuItem>
-                            <MenuItem value={30}>Expert</MenuItem>
-                            <MenuItem value={40}>Pro</MenuItem>
+                            <MenuItem value={'Beginner'}>Beginner</MenuItem>
+                            <MenuItem value={'Intermediate'}>Intermediate</MenuItem>
+                            <MenuItem value={'Expert'}>Expert</MenuItem>
+                            <MenuItem value={'Pro'}>Pro</MenuItem>
                           </Select>
                           )}
                         </GridItem>
@@ -685,7 +879,7 @@ export default function ProductSection() {
                             onClick={addSkill}
                           >
                             <Typography color="secondary">
-                              Add Another
+                              Add Another Skill
                             </Typography>
                           </Button>
                         </ThemeProvider>
@@ -696,17 +890,17 @@ export default function ProductSection() {
                     <h2 style={{ color: "black", marginTop: "60px" }}>
                       Testimonials
                     </h2>
-                    {testID.map(id => (
+                    {tests.map(el => (
                       // eslint-disable-next-line react/jsx-key
-                      <GridContainer id={id} className={classes.contentCard}>
+                      <GridContainer id={el.id} className={classes.contentCard}>
                         <GridItem xs={12} sm={12} md={12}>
-                          <h2 className={classes.numbering}>{id}.</h2>
+                          <h2 className={classes.numbering}>{el.id}.</h2>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.delete}>
                             <Button
                               color="secondary"
-                              onClick={() => deleteTest(id)}
+                              onClick={() => deleteTest(el.id)}
                             >
                               <img src={cancel} style={{ width: "30px" }} />{" "}
                             </Button>
@@ -718,6 +912,10 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleTests("testimonial_name", el.id - 1, e);
+                            }}
+                            value={tests[el.id -1].testimonial_name}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
@@ -726,17 +924,25 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleTests("testimonial_cred", el.id - 1, e);
+                            }}
+                            value={tests[el.id -1].testimonial_cred}
                           />
                           )}
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <TextField
-                            label="About Me"
+                            label="Testimonial"
                             style={{ margin: 8 }}
                             fullWidth
                             multiline
                             rows="4"
                             placeholder="Discription"
+                            onChange={e => {
+                              handleTests("testimonial_desc", el.id - 1, e);
+                            }}
+                            value={tests[el.id -1].testimonial_desc}
                           />
                         </GridItem>
                       </GridContainer>
@@ -751,7 +957,7 @@ export default function ProductSection() {
                             onClick={addTest}
                           >
                             <Typography color="secondary">
-                              Add Another
+                              Add Another Testimonial
                             </Typography>
                           </Button>
                         </ThemeProvider>
@@ -762,17 +968,17 @@ export default function ProductSection() {
                     <h2 style={{ color: "black", marginTop: "60px" }}>
                       Languages
                     </h2>
-                    {langID.map(id => (
+                    {langs.map(el => (
                       // eslint-disable-next-line react/jsx-key
-                      <GridContainer id={id} className={classes.contentCard}>
+                      <GridContainer id={el.id} className={classes.contentCard}>
                         <GridItem xs={12} sm={12} md={12}>
-                          <h2 className={classes.numbering}>{id}.</h2>
+                          <h2 className={classes.numbering}>{el.id}.</h2>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.delete}>
                             <Button
                               color="secondary"
-                              onClick={() => deleteLang(id)}
+                              onClick={() => deleteLang(el.id)}
                             >
                               <img src={cancel} style={{ width: "30px" }} />{" "}
                             </Button>
@@ -784,16 +990,25 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleLangs("name", el.id - 1, e);
+                            }}
+                            value={langs[el.id -1].name}
+                            
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
                           <Select
                             id="demo-simple-select"
                             className={classes.select}
+                            onChange={e => {
+                              handleLangs("level", el.id - 1, e);
+                            }}
+                            value={langs[el.id -1].level}
                           >
-                            <MenuItem value={10}>Beginner</MenuItem>
-                            <MenuItem value={20}>Intermediate</MenuItem>
-                            <MenuItem value={30}>Native</MenuItem>
+                            <MenuItem value={"Native Speaker"}>Native Speaker</MenuItem>
+                            <MenuItem value={"Second Language"}>Second Language</MenuItem>
+                            <MenuItem value={"Third Language"}>Third Language</MenuItem>
                           </Select>
                           )}
                         </GridItem>
@@ -809,7 +1024,7 @@ export default function ProductSection() {
                             onClick={addLang}
                           >
                             <Typography color="secondary">
-                              Add Another
+                              Add Another Language
                             </Typography>
                           </Button>
                         </ThemeProvider>
@@ -819,38 +1034,35 @@ export default function ProductSection() {
                 </div>
               <div>
               <ThemeProvider theme={theme}>
-                <ButtonGroup>
-                  <AnchorLink href="#top">
-                    <Button
-                      disabled={activeStep === 0}
-                      onClick={handleBack}
-                      color="primary"
-                      className={classNames(
-                        classes.button,
-                        classes.buttonWide
-                      )}
-                    >
-                      Back
-                    </Button>
-                  </AnchorLink>
-                  {/* <AnchorLink href="#top"> */}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classNames(
-                        classes.button,
-                        classes.buttonWide
-                      )}
-                      onClick={handleNext}
-                      type="submit"
-                    >
-                      <Typography color="secondary">
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                      </Typography>
-                    </Button>
-                  {/* </AnchorLink> */}
-                </ButtonGroup>
-              </ThemeProvider>
+                  <ButtonGroup>
+                    <AnchorLink href="#top">
+                      <Button
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        color="primary"
+                        className={classNames(
+                          classes.button,
+                          classes.buttonWide
+                        )}
+                      >
+                        Back
+                      </Button>
+                    </AnchorLink>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classNames(
+                          classes.button,
+                          classes.buttonWide
+                        )}
+                        type="submit"
+                        >
+                        <Typography color="secondary">
+                          {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                        </Typography>
+                      </Button>
+                  </ButtonGroup>
+                </ThemeProvider>
             </div>
             </div>
             ) : null}
@@ -861,17 +1073,17 @@ export default function ProductSection() {
                   <ThemeProvider theme={theme}>
                     <h2 style={{ color: "black" }}>Publications</h2>
 
-                    {pubID.map(id => (
+                    {pubs.map(el => (
                       // eslint-disable-next-line react/jsx-key
-                      <GridContainer id={id} className={classes.contentCard}>
+                      <GridContainer id={el.id} className={classes.contentCard}>
                         <GridItem xs={12} sm={12} md={12}>
-                          <h2 className={classes.numbering}>{id}.</h2>
+                          <h2 className={classes.numbering}>{el.id}.</h2>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.delete}>
                             <Button
                               color="secondary"
-                              onClick={() => deletePub(id)}
+                              onClick={() => deletePub(el.id)}
                             >
                               <img src={cancel} style={{ width: "30px" }} />{" "}
                             </Button>
@@ -883,12 +1095,20 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handlePubs("title", el.id - 1, e);
+                            }}
+                            value={pubs[el.id -1].title}
                           />
                           <TextField
                             label="Journal Name"
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handlePubs("journal_name", el.id - 1, e);
+                            }}
+                            value={pubs[el.id -1].journal_name}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
@@ -897,19 +1117,23 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handlePubs("supervisor", el.id - 1, e);
+                            }}
+                            value={pubs[el.id -1].supervisor}
                           />
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               style={{ marginLeft: "7px", marginTop: "9px" }}
-                              disableToolbar
-                              variant="inline"
                               format="MM/dd/yyyy"
                               margin="normal"
                               fullWidth
                               id="date-picker-inline"
                               label="Published Date"
-                              value={selectedDate}
-                              onChange={handleDateChange}
+                              onChange={e => {
+                                handlePubs("publish_date", el.id - 1, e);
+                              }}
+                              value={pubs[el.id -1].publish_date}
                               KeyboardButtonProps={{
                                 "aria-label": "change date"
                               }}
@@ -924,6 +1148,10 @@ export default function ProductSection() {
                             fullWidth
                             margin="normal"
                             variant="outlined"
+                            onChange={e => {
+                              handlePubs("article_link", el.id - 1, e);
+                            }}
+                            value={pubs[el.id -1].article_link}
                           />
                           )}
                         </GridItem>
@@ -939,7 +1167,7 @@ export default function ProductSection() {
                             onClick={addPub}
                           >
                             <Typography color="secondary">
-                              Add Another
+                              Add Another Publication
                             </Typography>
                           </Button>
                         </ThemeProvider>
@@ -950,17 +1178,17 @@ export default function ProductSection() {
                     <h2 style={{ color: "black", marginTop: "40px" }}>
                       Experience
                     </h2>
-                    {expID.map(id => (
+                    {exps.map(el => (
                       // eslint-disable-next-line react/jsx-key
-                      <GridContainer id={id} className={classes.contentCard}>
+                      <GridContainer id={el.id} className={classes.contentCard}>
                         <GridItem xs={12} sm={12} md={12}>
-                          <h2 className={classes.numbering}>{id}.</h2>
+                          <h2 className={classes.numbering}>{el.id}.</h2>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.delete}>
                             <Button
                               color="secondary"
-                              onClick={() => deleteExp(id)}
+                              onClick={() => deleteExp(el.id)}
                             >
                               <img src={cancel} style={{ width: "30px" }} />{" "}
                             </Button>
@@ -972,27 +1200,37 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleExps("company", el.id - 1, e);
+                            }}
+                            value={exps[el.id -1].company}
                           />
                           <TextField
                             label="Position"
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleExps("position", el.id - 1, e);
+                            }}
+                            value={exps[el.id -1].position}
+                            
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               style={{ marginLeft: "7px", marginTop: "9px" }}
-                              disableToolbar
                               variant="inline"
                               format="MM/dd/yyyy"
                               margin="normal"
                               fullWidth
                               id="date-picker-inline"
                               label="From"
-                              value={selectedDate}
-                              onChange={handleDateChange}
+                              onChange={e => {
+                                handleExps("start", el.id - 1, e);
+                              }}
+                              value={exps[el.id -1].timeline.start}
                               KeyboardButtonProps={{
                                 "aria-label": "change date"
                               }}
@@ -1001,15 +1239,16 @@ export default function ProductSection() {
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               style={{ marginLeft: "7px", marginTop: "9px" }}
-                              disableToolbar
                               variant="inline"
                               format="MM/dd/yyyy"
                               margin="normal"
                               fullWidth
                               id="date-picker-inline"
                               label="To"
-                              value={selectedDate}
-                              onChange={handleDateChange}
+                              onChange={e => {
+                                handleExps("end", el.id - 1, e);
+                              }}
+                              value={exps[el.id -1].timeline.end}
                               KeyboardButtonProps={{
                                 "aria-label": "change date"
                               }}
@@ -1024,6 +1263,10 @@ export default function ProductSection() {
                             fullWidth
                             margin="normal"
                             variant="outlined"
+                            onChange={e => {
+                              handleExps("company_link", el.id - 1, e);
+                            }}
+                            value={pubs[el.id -1].company_link}
                           />
                           <TextField
                             label="Summary"
@@ -1033,6 +1276,10 @@ export default function ProductSection() {
                             rows="4"
                             placeholder="Tell us about your experience"
                             variant="outlined"
+                            onChange={e => {
+                              handleExps("summary", el.id - 1, e);
+                            }}
+                            value={pubs[el.id -1].summary}
                           />
                           )}
                         </GridItem>
@@ -1051,7 +1298,7 @@ export default function ProductSection() {
                             onClick={addExp}
                           >
                             <Typography color="secondary">
-                              Add Another
+                              Add Another Experience
                             </Typography>
                           </Button>
                         </ThemeProvider>
@@ -1062,17 +1309,17 @@ export default function ProductSection() {
                     <h2 style={{ color: "black", marginTop: "40px" }}>
                       Education
                     </h2>
-                    {eduID.map(id => (
+                    {edus.map(el => (
                       // eslint-disable-next-line react/jsx-key
-                      <GridContainer id={id} className={classes.contentCard}>
+                      <GridContainer id={el.id} className={classes.contentCard}>
                         <GridItem xs={12} sm={12} md={12}>
-                          <h2 className={classes.numbering}>{id}.</h2>
+                          <h2 className={classes.numbering}>{el.id}.</h2>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.delete}>
                             <Button
                               color="secondary"
-                              onClick={() => deleteEdu(id)}
+                              onClick={() => deleteEdu(el.id)}
                             >
                               <img src={cancel} style={{ width: "30px" }} />{" "}
                             </Button>
@@ -1084,27 +1331,36 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleEdus("college_name", el.id - 1, e);
+                            }}
+                            value={edus[el.id -1].college_name}
                           />
                           <TextField
                             label="Degree Name"
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleEdus("degree_name", el.id - 1, e);
+                            }}
+                            value={edus[el.id -1].degree_name}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               style={{ marginLeft: "7px", marginTop: "9px" }}
-                              disableToolbar
                               variant="inline"
                               format="MM/dd/yyyy"
                               margin="normal"
                               fullWidth
                               id="date-picker-inline"
                               label="From"
-                              value={selectedDate}
-                              onChange={handleDateChange}
+                              onChange={e => {
+                                handleEdus("start", el.id - 1, e);
+                              }}
+                              value={edus[el.id -1].timeline.start}
                               KeyboardButtonProps={{
                                 "aria-label": "change date"
                               }}
@@ -1113,15 +1369,16 @@ export default function ProductSection() {
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               style={{ marginLeft: "7px", marginTop: "9px" }}
-                              disableToolbar
                               variant="inline"
                               format="MM/dd/yyyy"
                               margin="normal"
                               fullWidth
                               id="date-picker-inline"
                               label="To"
-                              value={selectedDate}
-                              onChange={handleDateChange}
+                              onChange={e => {
+                                handleEdus("end", el.id - 1, e);
+                              }}
+                              value={edus[el.id -1].timeline.end}
                               KeyboardButtonProps={{
                                 "aria-label": "change date"
                               }}
@@ -1163,7 +1420,7 @@ export default function ProductSection() {
                             onClick={addEdu}
                           >
                             <Typography color="secondary">
-                              Add Another
+                              Add Another Education
                             </Typography>
                           </Button>
                         </ThemeProvider>
@@ -1174,17 +1431,17 @@ export default function ProductSection() {
                     <h2 style={{ color: "black", marginTop: "40px" }}>
                       Achievements
                     </h2>
-                    {achID.map(id => (
+                    {achs.map(el => (
                       // eslint-disable-next-line react/jsx-key
-                      <GridContainer id={id} className={classes.contentCard}>
+                      <GridContainer id={el.id} className={classes.contentCard}>
                         <GridItem xs={12} sm={12} md={12}>
-                          <h2 className={classes.numbering}>{id}.</h2>
+                          <h2 className={classes.numbering}>{el.id}.</h2>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.delete}>
                             <Button
                               color="secondary"
-                              onClick={() => deleteAch(id)}
+                              onClick={() => deleteAch(el.id)}
                             >
                               <img src={cancel} style={{ width: "30px" }} />{" "}
                             </Button>
@@ -1196,21 +1453,26 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handleAchs("achievement_title", el.id - 1, e);
+                            }}
+                            value={achs[el.id -1].achievement_title}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <KeyboardDatePicker
                               style={{ marginLeft: "7px", marginTop: "9px" }}
-                              disableToolbar
-                              variant="inline"
                               format="MM/dd/yyyy"
                               margin="normal"
+
                               fullWidth
                               id="date-picker-inline"
                               label="Date"
-                              value={selectedDate}
-                              onChange={handleDateChange}
+                              onChange={e => {
+                                handleAchs("achievement_date", el.id - 1, e);
+                              }}
+                              value={achs[el.id -1].achievement_date}
                               KeyboardButtonProps={{
                                 "aria-label": "change date"
                               }}
@@ -1225,6 +1487,10 @@ export default function ProductSection() {
                             fullWidth
                             margin="normal"
                             variant="outlined"
+                            onChange={e => {
+                              handleAchs("achievement_url", el.id - 1, e);
+                            }}
+                            value={achs[el.id -1].achievement_url}
                           />
                           <TextField
                             label="Description"
@@ -1234,6 +1500,10 @@ export default function ProductSection() {
                             rows="3"
                             placeholder="Tell us about your achievement"
                             variant="outlined"
+                            onChange={e => {
+                              handleAchs("achievement_description", el.id - 1, e);
+                            }}
+                            value={achs[el.id -1].achievement_description}
                           />
                           )}
                         </GridItem>
@@ -1249,7 +1519,7 @@ export default function ProductSection() {
                             onClick={addAch}
                           >
                             <Typography color="secondary">
-                              Add Another
+                              Add Another Achievement
                             </Typography>
                           </Button>
                         </ThemeProvider>
@@ -1260,17 +1530,17 @@ export default function ProductSection() {
                     <h2 style={{ color: "black", marginTop: "40px" }}>
                       Projects
                     </h2>
-                    {projID.map(id => (
+                    {pros.map(el => (
                       // eslint-disable-next-line react/jsx-key
-                      <GridContainer id={id} className={classes.contentCard}>
+                      <GridContainer id={el.id} className={classes.contentCard}>
                         <GridItem xs={12} sm={12} md={12}>
-                          <h2 className={classes.numbering}>{id}.</h2>
+                          <h2 className={classes.numbering}>{el.id}.</h2>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
                           <h2 className={classes.delete}>
                             <Button
                               color="secondary"
-                              onClick={() => deleteProj(id)}
+                              onClick={() => deleteProj(el.id)}
                             >
                               <img src={cancel} style={{ width: "30px" }} />{" "}
                             </Button>
@@ -1282,26 +1552,48 @@ export default function ProductSection() {
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handlePros("title", el.id - 1, e);
+                            }}
+                            value={pros[el.id -1].title}
                           />
                           <TextField
                             label="Demo URL"
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handlePros("proj_demo", el.id - 1, e);
+                            }}
+                            value={pros[el.id -1].proj_demo}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>
-                          <Typography style={{ color: "black" }}>
+                          {/* <Typography style={{ color: "black" }}>
                             Project Preview
-                          </Typography>
-                          <Input type="file" style={{ marginTop: "6px" }}>
-                            Upload Preview
-                          </Input>
+                          </Typography> */}
+                          <input type='file' name='fileUpload' id='fileUpload' style={{ width: "0.1px", 
+                                                                                        height: '0.1px',	
+                                                                                        opacity: '0',	
+                                                                                        overflow: 'hidden',	
+                                                                                        position: 'absolute',	
+                                                                                        zIndex: '-1'}} 
+                          onChange={e => {
+                              handlePros("proj_image", el.id - 1, e);
+                            }} />
+                            <div style={{margin: '25px'}}>
+                            <label for='fileUpload' style={{cursor: "pointer", color: "#388E3C", fontSize: "18px", border: "0.5px solid #388E3C",borderRadius: "5px", padding: '8px'}}>Upload Image</label>
+                            </div>
+                          
                           <TextField
                             label="Git URL"
-                            style={{ marginTop: "9px" }}
+                            style={{ marginTop: "4px" }}
                             fullWidth
                             margin="normal"
+                            onChange={e => {
+                              handlePros("git_url", el.id - 1, e);
+                            }}
+                            value={pros[el.id -1].git_url}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}>
@@ -1313,6 +1605,10 @@ export default function ProductSection() {
                             rows="4"
                             placeholder="Tell us about your project"
                             variant="outlined"
+                            onChange={e => {
+                              handlePros("proj_desc", el.id - 1, e);
+                            }}
+                            value={pros[el.id -1].proj_desc}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={12}></GridItem>
@@ -1328,7 +1624,7 @@ export default function ProductSection() {
                             onClick={addProj}
                           >
                             <Typography color="secondary">
-                              Add Another
+                              Add Another Project
                             </Typography>
                           </Button>
                         </ThemeProvider>
@@ -1338,38 +1634,35 @@ export default function ProductSection() {
                 </div>
               <div>
               <ThemeProvider theme={theme}>
-                <ButtonGroup>
-                  <AnchorLink href="#top">
-                    <Button
-                      disabled={activeStep === 0}
-                      onClick={handleBack}
-                      color="primary"
-                      className={classNames(
-                        classes.button,
-                        classes.buttonWide
-                      )}
-                    >
-                      Back
-                    </Button>
-                  </AnchorLink>
-                  {/* <AnchorLink href="#top"> */}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classNames(
-                        classes.button,
-                        classes.buttonWide
-                      )}
-                      onClick={handleNext}
-                      type="submit"
-                    >
-                      <Typography color="secondary">
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                      </Typography>
-                    </Button>
-                  {/* </AnchorLink> */}
-                </ButtonGroup>
-              </ThemeProvider>
+                  <ButtonGroup>
+                    <AnchorLink href="#top">
+                      <Button
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        color="primary"
+                        className={classNames(
+                          classes.button,
+                          classes.buttonWide
+                        )}
+                      >
+                        Back
+                      </Button>
+                    </AnchorLink>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classNames(
+                          classes.button,
+                          classes.buttonWide
+                        )}
+                        type="submit"
+                        >
+                        <Typography color="secondary">
+                          {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                        </Typography>
+                      </Button>
+                  </ButtonGroup>
+                </ThemeProvider>
             </div>
             </div>
             ) : null}
