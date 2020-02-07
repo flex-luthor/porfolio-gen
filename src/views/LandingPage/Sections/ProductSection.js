@@ -64,6 +64,9 @@ import linkedIn from "../../../assets/img/i.png";
 import github from "../../../assets/img/g.png";
 import email from "../../../assets/img/e.png";
 import cancel from "../../../assets/img/cancel.svg";
+import twitter from "../../../assets/img/twitter.svg";
+import stack from "../../../assets/img/stack.svg";
+
 
 import FileUploader from "react-firebase-file-uploader";
 import firebase from "firebase";
@@ -83,14 +86,14 @@ const theme = createMuiTheme({
   }
 });
 
-const redTheme = createMuiTheme({
-  palette: {
-    primary: red,
-    secondary: {
-      main: "#fff"
-    }
-  }
-});
+// const redTheme = createMuiTheme({
+//   palette: {
+//     primary: red,
+//     secondary: {
+//       main: "#fff"
+//     }
+//   }
+// });
 
 const QontoConnector = withStyles({
   alternativeLabel: {
@@ -172,7 +175,7 @@ function getSteps() {
 
 export default function ProductSection() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(1);
   const [skillID, setSkillID] = React.useState([1]);
   const [testID, setTestID] = React.useState([1]);
   const [langID, setLangID] = React.useState([1]);
@@ -188,8 +191,12 @@ export default function ProductSection() {
   const [linkedInLink, setLinkedIn] = React.useState("");
   const [githubLink, setGithub] = React.useState("");
   const [emailLink, setEmail] = React.useState("");
+  const [twitterLink, setTwitter] = React.useState("");
+  const [stackLink, setStack] = React.useState("");
+  
 
-  const [skills, setSKills] = React.useState([{ description: "", level: "" }]);
+
+  const [skills, setSkills] = React.useState([{ description: "", level: "" }]);
 
   const [profile, setProfile] = React.useState({
     image: "",
@@ -200,11 +207,11 @@ export default function ProductSection() {
   const [selectedDate, setSelectedDate] = React.useState(
     new Date("2014-08-18T21:11:54")
   );
-
   const steps = getSteps();
 
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+  const handleNext = (e) => {
+    e.preventDefault();
+      setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -332,11 +339,18 @@ export default function ProductSection() {
   const handleEmail = event => {
     setEmail(event.target.value);
   };
+  const handleTwitter = event => {
+    setTwitter(event.target.value);
+  };
+  
+  const handleStack = event => {
+    setStack(event.target.value);
+  };
 
   const handleSkills = (field, id, event) => {
     const newSkills = skills;
-    newSkills[id].description = skills[id].description + event.target.value;
-    setSKills(newSkills);
+    // newSkills[id].description = event.target.value;
+    setSkills(skills[id].description = event.target.value);
     console.log(skills);
   };
 
@@ -362,18 +376,20 @@ export default function ProductSection() {
               </Step>
             ))}
           </Stepper>
-          <form>
             <div>
+            <form onSubmit={handleNext}>
               {activeStep === 0 ? (
+                <div>
                 <div>
                   <ThemeProvider theme={theme}>
                     <GridContainer>
                       <GridItem xs={12} sm={12} md={8}>
                         <TextField
-                          id="outlined-static"
+                          id="fullname"
                           label="Name"
                           style={{ margin: 8 }}
                           placeholder="Enter your full name"
+                          required
                           fullWidth
                           margin="normal"
                           InputLabelProps={{
@@ -382,17 +398,22 @@ export default function ProductSection() {
                           variant="outlined"
                           value={profileName}
                           onChange={handleChangeName}
+                          style={{marginLeft: '0px'}}
                         />
                         <TextField
                           label="About Me"
                           style={{ margin: 8 }}
                           fullWidth
+                          id="aboutme"
                           multiline
                           rows="8"
                           placeholder="Tell us about yourself"
                           variant="outlined"
                           value={aboutMe}
+                          required
                           onChange={handleChangeAbout}
+                          style={{marginLeft: '0px'}}
+
                         />
                       </GridItem>
                       <GridItem xs={12} sm={12} md={4}>
@@ -411,8 +432,6 @@ export default function ProductSection() {
                               marginBottom: "20px"
                             }}
                           />
-                        ) : profile.imageURL === "1" ? (
-                          <h4>Loading</h4>
                         ) : (
                               <img
                                 src={profile.imageURL}
@@ -432,6 +451,7 @@ export default function ProductSection() {
                           <FileUploader
                             accept="images/*"
                             name="image"
+                            
                             style={{ marginLeft: "30%" }}
                             storageRef={firebase.storage().ref("profile")}
                             onUploadStart={handleUploadStart}
@@ -449,13 +469,14 @@ export default function ProductSection() {
                           Social links:
                         </h4>
                       </GridItem>
-                      <GridItem xs={12} sm={12} md={4}>
+                      <GridItem xs={12} sm={12} md={4} style={{marginTop: '20px'}}>
                         <TextField
                           className={classes.margin}
-                          id="input-with-icon-textfield"
+                          id="linkedin"
                           variant="outlined"
-                          placeholder="LinkedIn link"
+                          label="LinkedIn"
                           fullWidth
+                          required
                           value={linkedInLink}
                           onChange={handleLinkedIn}
                           InputProps={{
@@ -472,14 +493,15 @@ export default function ProductSection() {
                           }}
                         />
                       </GridItem>
-                      <GridItem xs={12} sm={12} md={4}>
+                      <GridItem xs={12} sm={12} md={4} style={{marginTop: '20px'}}>
                         <TextField
                           className={classes.margin}
-                          id="input-with-icon-textfield"
+                          id="twitter"
                           variant="outlined"
-                          placeholder="Github link"
+                          label="Github"
                           fullWidth
                           value={githubLink}
+                          required
                           onChange={handleGithub}
                           InputProps={{
                             startAdornment: (
@@ -494,13 +516,14 @@ export default function ProductSection() {
                           }}
                         />
                       </GridItem>
-                      <GridItem xs={12} sm={12} md={4}>
+                      <GridItem xs={12} sm={12} md={4} style={{marginTop: '20px'}}>
                         <TextField
                           className={classes.margin}
-                          id="input-with-icon-textfield"
+                          id="email"
                           variant="outlined"
-                          placeholder="Email Id"
+                          label="Email Id"
                           fullWidth
+                          required
                           value={emailLink}
                           onChange={handleEmail}
                           InputProps={{
@@ -516,12 +539,89 @@ export default function ProductSection() {
                           }}
                         />
                       </GridItem>
+                      <GridItem xs={12} sm={12} md={6} style={{marginTop: '20px'}}>
+                        <TextField
+                          className={classes.margin}
+                          id="twitter"
+                          variant="outlined"
+                          label="twitter"
+                          fullWidth
+                          value={twitterLink}
+                          onChange={handleTwitter}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <img
+                                  src={twitter}
+                                  alt="twitter"
+                                  style={{ width: "20px" }}
+                                />
+                              </InputAdornment>
+                            )
+                          }}
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={6} style={{marginTop: '20px'}}>
+                        <TextField
+                          className={classes.margin}
+                          id="stack"
+                          variant="outlined"
+                          label="Stack Overflow"
+                          fullWidth
+                          value={stackLink}
+                          onChange={handleStack}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <img
+                                  src={stack}
+                                  alt="Stack overflow"
+                                  style={{ width: "20px" }}
+                                />
+                              </InputAdornment>
+                            )
+                          }}
+                        />
+                      </GridItem>
                     </GridContainer>
                   </ThemeProvider>
                 </div>
+                <div>
+                <ThemeProvider theme={theme}>
+                  <ButtonGroup>
+                    <AnchorLink href="#top">
+                      <Button
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        color="primary"
+                        className={classNames(
+                          classes.button,
+                          classes.buttonWide
+                        )}
+                      >
+                        Back
+                      </Button>
+                    </AnchorLink>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classNames(
+                          classes.button,
+                          classes.buttonWide
+                        )}
+                        type="submit"
+                        >
+                        <Typography color="secondary">
+                          {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                        </Typography>
+                      </Button>
+                  </ButtonGroup>
+                </ThemeProvider>
+              </div>
+              </div>                       
               ) : null}
-
               {activeStep === 1 ? (
+                <div>
                 <div>
                   <ThemeProvider theme={theme} className={classes.contentCard}>
                     <h2 style={{ color: "black" }}>Skills</h2>
@@ -551,6 +651,7 @@ export default function ProductSection() {
                               className: classes.input
                             }}
                             label="Skill Description"
+                            required
                             style={{ margin: 8 }}
                             fullWidth
                             margin="normal"
@@ -716,9 +817,46 @@ export default function ProductSection() {
                     </GridContainer>
                   </ThemeProvider>
                 </div>
-              ) : null}
+              <div>
+              <ThemeProvider theme={theme}>
+                <ButtonGroup>
+                  <AnchorLink href="#top">
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      color="primary"
+                      className={classNames(
+                        classes.button,
+                        classes.buttonWide
+                      )}
+                    >
+                      Back
+                    </Button>
+                  </AnchorLink>
+                  {/* <AnchorLink href="#top"> */}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classNames(
+                        classes.button,
+                        classes.buttonWide
+                      )}
+                      onClick={handleNext}
+                      type="submit"
+                    >
+                      <Typography color="secondary">
+                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                      </Typography>
+                    </Button>
+                  {/* </AnchorLink> */}
+                </ButtonGroup>
+              </ThemeProvider>
+            </div>
+            </div>
+            ) : null}
 
               {activeStep === 2 ? (
+                <div>
                 <div>
                   <ThemeProvider theme={theme}>
                     <h2 style={{ color: "black" }}>Publications</h2>
@@ -1198,43 +1336,45 @@ export default function ProductSection() {
                     </GridContainer>
                   </ThemeProvider>
                 </div>
-              ) : null}
               <div>
-                <ThemeProvider theme={theme}>
-                  <ButtonGroup>
-                    <AnchorLink href="#top">
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        color="primary"
-                        className={classNames(
-                          classes.button,
-                          classes.buttonWide
-                        )}
-                      >
-                        Back
-                      </Button>
-                    </AnchorLink>
-                    <AnchorLink href="#top">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className={classNames(
-                          classes.button,
-                          classes.buttonWide
-                        )}
-                        onClick={handleNext}
-                      >
-                        <Typography color="secondary">
-                          {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                        </Typography>
-                      </Button>
-                    </AnchorLink>
-                  </ButtonGroup>
-                </ThemeProvider>
-              </div>
+              <ThemeProvider theme={theme}>
+                <ButtonGroup>
+                  <AnchorLink href="#top">
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      color="primary"
+                      className={classNames(
+                        classes.button,
+                        classes.buttonWide
+                      )}
+                    >
+                      Back
+                    </Button>
+                  </AnchorLink>
+                  {/* <AnchorLink href="#top"> */}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classNames(
+                        classes.button,
+                        classes.buttonWide
+                      )}
+                      onClick={handleNext}
+                      type="submit"
+                    >
+                      <Typography color="secondary">
+                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                      </Typography>
+                    </Button>
+                  {/* </AnchorLink> */}
+                </ButtonGroup>
+              </ThemeProvider>
             </div>
-          </form>
+            </div>
+            ) : null}
+           </form>
+            </div>
         </GridItem>
       </GridContainer>
       <div></div>

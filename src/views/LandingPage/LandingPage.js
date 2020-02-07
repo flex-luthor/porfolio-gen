@@ -22,6 +22,8 @@ import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import ProductSection from "./Sections/ProductSection.js";
 import TeamSection from "./Sections/TeamSection.js";
 import WorkSection from "./Sections/WorkSection.js";
+import { Slide, Slider } from "@material-ui/core";
+import { Link, animateScroll as scroll } from "react-scroll";
 
 const dashboardRoutes = [];
 
@@ -30,6 +32,7 @@ const useStyles = makeStyles(styles);
 export default function LandingPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
+  
   return (
     <div>
       <Header
@@ -64,24 +67,24 @@ export default function LandingPage(props) {
                 link.
               </h4>
               <br />
+              <Link to="section1" smooth={true} offset={-70} duration={500}>
               <Button
                 round
                 color="success"
                 size="lg"
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ref=creativetim"
-                target="_blank"
                 rel="noopener noreferrer"
               >
                 <CreateRoundedIcon fontSize="large" />
                 Get Started
               </Button>
+              </Link>
             </GridItem>
           </GridContainer>
         </div>
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <div className={classes.container}>
-          <ProductSection />
+        <div className={classes.container}  id="section1">
+          <ProductSection/>
         </div>
       </div>
     </div>
