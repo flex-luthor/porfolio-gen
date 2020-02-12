@@ -88,12 +88,12 @@ export default function LandingPage(props) {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}  id="section1">
-            <GoogleLogin
+            {/* <GoogleLogin
             clientId="356883126789-kr191fl5f5odmmb8c9lr0dspapq41rlb.apps.googleusercontent.com" 
             buttonText="Login with Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
-          />
+          /> */}
           <ProductSection/>
         </div>
       </div>
