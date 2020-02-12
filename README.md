@@ -114,14 +114,11 @@ portfolio-generator
     │       ├── Success.js
     │       └── Warning.js
     └── views
-        ├── LandingPage
-        │   ├── LandingPage.js
-        │   └── Sections
-        │       ├── ProductSection.js
-        ├── LoginPage
-        │   └── LoginPage.js
-        └── ProfilePage
-            └── ProfilePage.js
+        └── LandingPage
+            ├── LandingPage.js
+            └── Sections
+                ├── ProductSection.js
+
 ```
 
 
