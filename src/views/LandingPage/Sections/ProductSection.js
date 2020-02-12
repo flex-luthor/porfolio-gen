@@ -1440,7 +1440,7 @@ export default function ProductSection() {
                               style={{ marginTop: "40px" }}
                               onClick={addSkill}
                             >
-                              <Typography color="secondary">
+                              <Typography color="secondary" style={{color: "white"}}>
                                 Add Another Skill
                               </Typography>
                             </Button>
@@ -1632,7 +1632,7 @@ export default function ProductSection() {
                           )}
                           type="submit"
                         >
-                          <Typography color="secondary">
+                          <Typography style={{color: "white"}}>
                             {activeStep === steps.length - 1
                               ? "Finish"
                               : "Next"}
@@ -1850,7 +1850,7 @@ export default function ProductSection() {
                               onChange={e => {
                                 handleExps("company_link", el.id - 1, e);
                               }}
-                              value={pubs[el.id - 1].company_link}
+                              value={exps[el.id - 1].company_link}
                             />
                             <TextField
                               label="Summary"
@@ -2288,7 +2288,7 @@ export default function ProductSection() {
                           )}
                           type="submit"
                         >
-                          <Typography color="secondary">
+                          <Typography style={{color: "white"}}>
                             {activeStep === steps.length - 1
                               ? "Finish"
                               : "Next"}
