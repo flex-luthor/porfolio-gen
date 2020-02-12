@@ -87,6 +87,7 @@ export default function LandingPage(props) {
           <ProductSection/>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
