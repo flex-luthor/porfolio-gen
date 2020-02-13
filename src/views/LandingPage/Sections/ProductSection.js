@@ -63,7 +63,7 @@ import styles from "assets/jss/material-kit-react/views/landingPageSections/prod
 import classNames from "classnames";
 import green from "@material-ui/core/colors/green";
 import red from "@material-ui/core/colors/red";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import ThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import TextField from "@material-ui/core/TextField";
@@ -228,6 +228,7 @@ export default function ProductSection() {
     var monthIndex = date.getMonth();
     var year = date.getFullYear();
 
+    console.log(day + " " + monthNames[monthIndex] + " " + year);
     return day + " " + monthNames[monthIndex] + " " + year;
   }
 
@@ -273,7 +274,7 @@ export default function ProductSection() {
       title: "",
       journal_name: "",
       supervisor: "",
-      publish_date: new Date("2014-08-18T21:11:54"),
+      publish_date: formatDate(new Date("2014-08-18T21:11:54")),
       article_link: ""
     }
   ]);
@@ -284,8 +285,8 @@ export default function ProductSection() {
       position: "",
       company: "",
       duration: {
-        start: new Date("2014-08-18T21:11:54"),
-        end: new Date("2015-08-17T21:11:54")
+        start: formatDate(new Date("2014-08-18T21:11:54")),
+        end: formatDate(new Date("2015-08-17T21:11:54"))
       },
       timeline: "",
       summary: ""
@@ -299,8 +300,8 @@ export default function ProductSection() {
       college_url: "",
       summary: "",
       duration: {
-        start: new Date("2014-08-18T21:11:54"),
-        end: new Date("2014-08-18T21:11:54")
+        start: formatDate(new Date("2014-08-18T21:11:54")),
+        end: formatDate(new Date("2014-08-18T21:11:54"))
       },
       timeline: ""
     }
@@ -310,7 +311,7 @@ export default function ProductSection() {
       id: 1,
       achievement_title: "",
       achievement_description: "",
-      achievement_date: new Date("2014-08-18T21:11:54"),
+      achievement_date: formatDate(new Date("2014-08-18T21:11:54")),
       achievement_url: ""
     }
   ]);
@@ -359,28 +360,32 @@ export default function ProductSection() {
           projects: pros
         }
       };
-      for (let index = 0; index < exps.length; index++) {
-        data.data.experience[index].timeline =
-          formatDate(data.data.experience[index].duration.start) +
-          "-" +
-          formatDate(data.data.experience[index].duration.end);
-      }
-      for (let index = 0; index < edus.length; index++) {
-        data.data.education[index].timeline =
-          formatDate(data.data.education[index].duration.start) +
-          "-" +
-          formatDate(data.data.education[index].duration.end);
-      }
-      for (let index = 0; index < pubs.length; index++) {
-        data.data.publications[index].publish_date = formatDate(
-          data.data.publications[index].publish_date
-        );
-      }
-      for (let index = 0; index < achs.length; index++) {
-        data.data.achievements[index].achievement_date = formatDate(
-          data.data.achievements[index].achievement_date
-        );
-      }
+      console.log(data);
+
+      // for (let index = 0; index < exps.length; index++) {
+      //   console.log(data.data.experience[index].duration.start);
+
+      //   data.data.experience[index].timeline =
+      //     formatDate(data.data.experience[index].duration.start) +
+      //     "-" +
+      //     formatDate(data.data.experience[index].duration.end);
+      // }
+      // for (let index = 0; index < edus.length; index++) {
+      //   data.data.education[index].timeline =
+      //     formatDate(data.data.education[index].duration.start) +
+      //     "-" +
+      //     formatDate(data.data.education[index].duration.end);
+      // }
+      // for (let index = 0; index < pubs.length; index++) {
+      //   data.data.publications[index].publish_date = formatDate(
+      //     data.data.publications[index].publish_date
+      //   );
+      // }
+      // for (let index = 0; index < achs.length; index++) {
+      //   data.data.achievements[index].achievement_date = formatDate(
+      //     data.data.achievements[index].achievement_date
+      //   );
+      // }
       const body = JSON.stringify(data);
       console.log(body);
       axios({
@@ -464,7 +469,7 @@ export default function ProductSection() {
           title: "",
           journal_name: "",
           supervisor: "",
-          publish_date: new Date("2014-08-18T21:11:54"),
+          publish_date: formatDate(new Date("2014-08-18T21:11:54")),
           article_link: ""
         }
       ];
@@ -487,8 +492,8 @@ export default function ProductSection() {
           position: "",
           company: "",
           duration: {
-            start: new Date("2014-08-18T21:11:54"),
-            end: new Date("2014-08-18T21:11:54")
+            start: formatDate(new Date("2014-08-18T21:11:54")),
+            end: formatDate(new Date("2014-08-18T21:11:54"))
           },
           timeline: "",
           summary: ""
@@ -514,8 +519,8 @@ export default function ProductSection() {
           college_url: "",
           summary: "",
           duration: {
-            start: new Date("2014-08-18T21:11:54"),
-            end: new Date("2014-08-18T21:11:54")
+            start: formatDate(new Date("2014-08-18T21:11:54")),
+            end: formatDate(new Date("2014-08-18T21:11:54"))
           },
           timeline: ""
         }
@@ -537,7 +542,7 @@ export default function ProductSection() {
           id: achNum,
           achievement_title: "",
           achievement_description: "",
-          achievement_date: new Date("2014-08-18T21:11:54"),
+          achievement_date: formatDate(new Date("2014-08-18T21:11:54")),
           achievement_url: ""
         }
       ];
@@ -731,11 +736,22 @@ export default function ProductSection() {
     if (field === "start") {
       setExps([
         ...exps.slice(0, id),
-        { ...exps[id], duration: { start: evn } }
+        {
+          ...exps[id],
+          duration: { start: evn, end: exps[id].duration.end },
+          timeline: evn + "-" + exps[id].duration.end
+        }
       ]);
     }
     if (field === "end") {
-      setExps([...exps.slice(0, id), { ...exps[id], duration: { end: evn } }]);
+      setExps([
+        ...exps.slice(0, id),
+        {
+          ...exps[id],
+          duration: { start: exps[id].duration.start, end: evn },
+          timeline: exps[id].duration.start + "-" + evn
+        }
+      ]);
     }
     if (field === "summary") {
       setExps([
@@ -773,11 +789,22 @@ export default function ProductSection() {
     if (field === "start") {
       setEdus([
         ...edus.slice(0, id),
-        { ...edus[id], duration: { start: evn } }
+        {
+          ...edus[id],
+          duration: { start: evn, end: edus[id].duration.end },
+          timeline: evn + "-" + edus[id].duration.end
+        }
       ]);
     }
     if (field === "end") {
-      setEdus([...edus.slice(0, id), { ...edus[id], duration: { end: evn } }]);
+      setEdus([
+        ...edus.slice(0, id),
+        {
+          ...edus[id],
+          duration: { start: edus[id].duration.start, end: evn },
+          timeline: edus[id].duration.start + "-" + evn
+        }
+      ]);
     }
   };
 
@@ -878,15 +905,14 @@ export default function ProductSection() {
     setCopied(true);
     ClipBoard(portfolioLink);
   };
-  
+
   const handleTemplate = (temp, e) => {
     setTemplate(temp);
     handleNext(e);
     console.log(temp);
-  }
+  };
 
-
-  const matches = useMediaQuery('(min-width:600px)');
+  const matches = useMediaQuery("(min-width:600px)");
   return (
     <div className={classes.section} id="top">
       <GridContainer justify="center">
@@ -900,18 +926,21 @@ export default function ProductSection() {
           ) : (
             <h2 className={classes.title}>Choose a Template</h2>
           )}
-          {matches ? (<Stepper
-            alternativeLabel
-            activeStep={activeStep}
-            connector={<QontoConnector />}
-          >
-            {steps.map(label => (
-              <Step key={label}>
-                <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          ): null}
+          {matches ? (
+            <Stepper
+              alternativeLabel
+              activeStep={activeStep}
+              connector={<QontoConnector />}
+            >
+              {steps.map(label => (
+                <Step key={label}>
+                  <StepLabel StepIconComponent={QontoStepIcon}>
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          ) : null}
           <div>
             <form onSubmit={handleNext}>
               {activeStep === 0 ? (
@@ -925,14 +954,14 @@ export default function ProductSection() {
                     >
                       <Card className={classes.root}>
                         <CardActionArea onClick={e => handleTemplate(1, e)}>
-                        <img src={template2} style={{width: '100%'}}/>
+                          <img src={template2} style={{ width: "100%" }} />
                           <CardContent>
                             <Typography
                               gutterBottom
                               variant="h5"
                               component="h2"
-                              style={{color: "#222"}}
-                              >
+                              style={{ color: "#222" }}
+                            >
                               Nice and Simple
                             </Typography>
                             <Typography
@@ -943,17 +972,24 @@ export default function ProductSection() {
                               A classic and responsive portfolio theme for all
                               your professional needs.
                             </Typography>
-                            <br />  
+                            <br />
                             <br />
                           </CardContent>
                         </CardActionArea>
                         <CardActions>
-                        <a href="https://d2c1dleky96i4z.cloudfront.net/janedoe-gmail-com.html" target="_blank">
-                          <Button size="small" color="primary">
-                            Live Demo
-                          </Button>
+                          <a
+                            href="https://d2c1dleky96i4z.cloudfront.net/janedoe-gmail-com.html"
+                            target="_blank"
+                          >
+                            <Button size="small" color="primary">
+                              Live Demo
+                            </Button>
                           </a>
-                          <Button size="small" color="primary" onClick={e => handleTemplate(1, e)}>
+                          <Button
+                            size="small"
+                            color="primary"
+                            onClick={e => handleTemplate(1, e)}
+                          >
                             Select
                           </Button>
                         </CardActions>
@@ -967,14 +1003,13 @@ export default function ProductSection() {
                     >
                       <Card className={classes.root}>
                         <CardActionArea onClick={e => handleTemplate(2, e)}>
-                          <img src={template1} style={{width: '100%'}}/>
+                          <img src={template1} style={{ width: "100%" }} />
                           <CardContent>
                             <Typography
                               gutterBottom
                               variant="h5"
                               component="h2"
-                              style={{color: "#222"}}
-
+                              style={{ color: "#222" }}
                             >
                               Ronaldo
                             </Typography>
@@ -989,14 +1024,21 @@ export default function ProductSection() {
                             </Typography>
                             <br />
                           </CardContent>
-                        </CardActionArea> 
+                        </CardActionArea>
                         <CardActions>
-                          <a href="https://d2c1dleky96i4z.cloudfront.net/johndoe-gmail-com.html" target="_blank">
-                          <Button size="small" color="primary">
-                            Live Demo
-                          </Button>
+                          <a
+                            href="https://d2c1dleky96i4z.cloudfront.net/johndoe-gmail-com.html"
+                            target="_blank"
+                          >
+                            <Button size="small" color="primary">
+                              Live Demo
+                            </Button>
                           </a>
-                          <Button size="small" color="primary" onClick={e => handleTemplate(2, e)}>
+                          <Button
+                            size="small"
+                            color="primary"
+                            onClick={e => handleTemplate(2, e)}
+                          >
                             Select
                           </Button>
                         </CardActions>
@@ -1356,7 +1398,7 @@ export default function ProductSection() {
                           )}
                           type="submit"
                         >
-                          <Typography style={{color: "white"}}>
+                          <Typography style={{ color: "white" }}>
                             {activeStep === steps.length - 1
                               ? "Finish"
                               : "Next"}
@@ -1440,7 +1482,10 @@ export default function ProductSection() {
                               style={{ marginTop: "40px" }}
                               onClick={addSkill}
                             >
-                              <Typography color="secondary" style={{color: "white"}}>
+                              <Typography
+                                color="secondary"
+                                style={{ color: "white" }}
+                              >
                                 Add Another Skill
                               </Typography>
                             </Button>
@@ -1632,7 +1677,7 @@ export default function ProductSection() {
                           )}
                           type="submit"
                         >
-                          <Typography style={{color: "white"}}>
+                          <Typography style={{ color: "white" }}>
                             {activeStep === steps.length - 1
                               ? "Finish"
                               : "Next"}
@@ -1712,7 +1757,11 @@ export default function ProductSection() {
                                 id="date-picker-inline"
                                 label="Published Date"
                                 onChange={e => {
-                                  handlePubs("publish_date", el.id - 1, e);
+                                  handlePubs(
+                                    "publish_date",
+                                    el.id - 1,
+                                    formatDate(e)
+                                  );
                                 }}
                                 value={pubs[el.id - 1].publish_date}
                                 KeyboardButtonProps={{
@@ -1812,7 +1861,7 @@ export default function ProductSection() {
                                 id="date-picker-inline"
                                 label="From"
                                 onChange={e => {
-                                  handleExps("start", el.id - 1, e);
+                                  handleExps("start", el.id - 1, formatDate(e));
                                 }}
                                 value={exps[el.id - 1].duration.start}
                                 KeyboardButtonProps={{
@@ -1830,7 +1879,7 @@ export default function ProductSection() {
                                 id="date-picker-inline"
                                 label="To"
                                 onChange={e => {
-                                  handleExps("end", el.id - 1, e);
+                                  handleExps("end", el.id - 1, formatDate(e));
                                 }}
                                 value={exps[el.id - 1].duration.end}
                                 KeyboardButtonProps={{
@@ -1946,7 +1995,7 @@ export default function ProductSection() {
                                 id="date-picker-inline"
                                 label="From"
                                 onChange={e => {
-                                  handleEdus("start", el.id - 1, e);
+                                  handleEdus("start", el.id - 1, formatDate(e));
                                 }}
                                 value={edus[el.id - 1].duration.start}
                                 KeyboardButtonProps={{
@@ -1964,7 +2013,7 @@ export default function ProductSection() {
                                 id="date-picker-inline"
                                 label="To"
                                 onChange={e => {
-                                  handleEdus("end", el.id - 1, e);
+                                  handleEdus("end", el.id - 1, formatDate(e));
                                 }}
                                 value={edus[el.id - 1].duration.end}
                                 KeyboardButtonProps={{
@@ -2061,7 +2110,11 @@ export default function ProductSection() {
                                 id="date-picker-inline"
                                 label="Date"
                                 onChange={e => {
-                                  handleAchs("achievement_date", el.id - 1, e);
+                                  handleAchs(
+                                    "achievement_date",
+                                    el.id - 1,
+                                    formatDate(e)
+                                  );
                                 }}
                                 value={achs[el.id - 1].achievement_date}
                                 KeyboardButtonProps={{
@@ -2288,7 +2341,7 @@ export default function ProductSection() {
                           )}
                           type="submit"
                         >
-                          <Typography style={{color: "white"}}>
+                          <Typography style={{ color: "white" }}>
                             {activeStep === steps.length - 1
                               ? "Finish"
                               : "Next"}
