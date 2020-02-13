@@ -1863,7 +1863,7 @@ export default function ProductSection() {
                               onChange={e => {
                                 handleExps("summary", el.id - 1, e);
                               }}
-                              value={pubs[el.id - 1].summary}
+                              value={exps[el.id - 1].summary}
                             />
                             )}
                           </GridItem>
