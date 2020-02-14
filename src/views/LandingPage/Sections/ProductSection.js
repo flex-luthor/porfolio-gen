@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 // @material-ui/core components
 import {
@@ -6,39 +6,23 @@ import {
   withStyles,
   createMuiTheme
 } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
-import MaUTable from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import AnchorLink from "react-anchor-link-smooth-scroll";
-
-import LinkIcon from "@material-ui/icons/Link";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
 
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker
 } from "@material-ui/pickers";
-import Upload from "material-ui-upload/Upload";
 
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 
 // @material-ui/icons
 
@@ -47,8 +31,7 @@ import Slide from "@material-ui/core/Slide";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import InfoArea from "components/InfoArea/InfoArea.js";
-import PropTypes, { array } from "prop-types";
+import PropTypes from "prop-types";
 import clsx from "clsx";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -62,14 +45,11 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import styles from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 import classNames from "classnames";
 import green from "@material-ui/core/colors/green";
-import red from "@material-ui/core/colors/red";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import ThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookf, fas } from "@fortawesome/free-solid-svg-icons";
 
 import Tilt from "react-tilt";
 
@@ -81,7 +61,6 @@ import twitter from "../../../assets/img/twitter.svg";
 import stack from "../../../assets/img/stack.svg";
 import phone from "../../../assets/img/phone.svg";
 import pin from "../../../assets/img/pin.svg";
-import check from "../../../assets/img/check-circle.gif";
 import design from "../../../assets/img/design.gif";
 
 import template1 from "../../../assets/img/template1.jpg";
@@ -230,11 +209,10 @@ export default function ProductSection() {
     var monthIndex = date.getMonth();
     var year = date.getFullYear();
 
-    console.log(day + " " + monthNames[monthIndex] + " " + year);
     return day + " " + monthNames[monthIndex] + " " + year;
   }
 
-  const [activeStep, setActiveStep] = React.useState(3);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [loading, setLoading] = React.useState(0);
   const [open, setOpen] = React.useState(false);
 
@@ -415,11 +393,14 @@ export default function ProductSection() {
   }; */
 
   const addSkill = () => {
-    var skillNum = skills.length + 1;
     setSkills(oldArray => {
       return [
         ...oldArray,
-        { id: skillNum, skill_name: "", skill_level: "Beginner" }
+        {
+          id: skills[skills.length - 1].id + 1,
+          skill_name: "",
+          skill_level: "Beginner"
+        }
       ];
     });
     console.log(skills);
@@ -427,6 +408,7 @@ export default function ProductSection() {
 
   const deleteSkill = id => {
     setSkills(skills.filter(e => e.id !== id));
+    skills.filter(e => e.id > id).forEach(e => e.id--);
   };
 
   const addTest = () => {
@@ -447,6 +429,7 @@ export default function ProductSection() {
 
   const deleteTest = id => {
     setTests(tests.filter(e => e.id !== id));
+    tests.filter(e => e.id > id).forEach(e => e.id--);
   };
 
   const addLang = () => {
@@ -459,6 +442,7 @@ export default function ProductSection() {
 
   const deleteLang = id => {
     setLangs(langs.filter(e => e.id !== id));
+    langs.filter(e => e.id > id).forEach(e => e.id--);
   };
 
   const addPub = () => {
@@ -481,6 +465,7 @@ export default function ProductSection() {
 
   const deletePub = id => {
     setPubs(pubs.filter(e => e.id !== id));
+    pubs.filter(e => e.id > id).forEach(e => e.id--);
   };
 
   const addExp = () => {
@@ -507,6 +492,7 @@ export default function ProductSection() {
 
   const deleteExp = id => {
     setExps(exps.filter(e => e.id !== id));
+    exps.filter(e => e.id > id).forEach(e => e.id--);
   };
 
   const addEdu = () => {
@@ -533,6 +519,7 @@ export default function ProductSection() {
 
   const deleteEdu = id => {
     setEdus(edus.filter(e => e.id !== id));
+    edus.filter(e => e.id > id).forEach(e => e.id--);
   };
 
   const addAch = () => {
@@ -554,6 +541,7 @@ export default function ProductSection() {
 
   const deleteAch = id => {
     setAchs(achs.filter(e => e.id !== id));
+    achs.filter(e => e.id > id).forEach(e => e.id--);
   };
 
   const addProj = () => {
@@ -576,6 +564,7 @@ export default function ProductSection() {
 
   const deleteProj = id => {
     setPros(pros.filter(e => e.id !== id));
+    pros.filter(e => e.id > id).forEach(e => e.id--);
   };
 
   // const handleDateChangePub = date => {
@@ -641,14 +630,16 @@ export default function ProductSection() {
   const handleSkills = (field, id, evn) => {
     if (field === "skill_name") {
       setSkills([
-        ...skills.filter(e => e.id !== id),
-        { ...skills[id], skill_name: evn.target.value }
+        ...skills.slice(0, id),
+        { ...skills[id], skill_name: evn.target.value },
+        ...skills.slice(id + 1, skills.length)
       ]);
     }
     if (field === "skill_level") {
       setSkills([
-        ...skills.filter(e => e.id !== id),
-        { ...skills[id], skill_level: evn.target.value }
+        ...skills.slice(0, id),
+        { ...skills[id], skill_level: evn.target.value },
+        ...skills.slice(id + 1, skills.length)
       ]);
     }
   };
@@ -656,20 +647,23 @@ export default function ProductSection() {
   const handleTests = (field, id, evn) => {
     if (field === "testimonial_name") {
       setTests([
-        ...tests.filter(e => e.id !== id),
-        { ...tests[id], testimonial_name: evn.target.value }
+        ...tests.slice(0, id),
+        { ...tests[id], testimonial_name: evn.target.value },
+        ...tests.slice(id + 1, tests.length)
       ]);
     }
     if (field === "testimonial_cred") {
       setTests([
-        ...tests.filter(e => e.id !== id),
-        { ...tests[id], testimonial_cred: evn.target.value }
+        ...tests.slice(0, id),
+        { ...tests[id], testimonial_cred: evn.target.value },
+        ...tests.slice(id + 1, tests.length)
       ]);
     }
     if (field === "testimonial_desc") {
       setTests([
-        ...tests.filter(e => e.id !== id),
-        { ...tests[id], testimonial_desc: evn.target.value }
+        ...tests.slice(0, id),
+        { ...tests[id], testimonial_desc: evn.target.value },
+        ...tests.slice(id + 1, tests.length)
       ]);
     }
   };
@@ -677,14 +671,16 @@ export default function ProductSection() {
   const handleLangs = (field, id, evn) => {
     if (field === "name") {
       setLangs([
-        ...langs.filter(e => e.id !== id),
-        { ...langs[id], name: evn.target.value }
+        ...langs.slice(0, id),
+        { ...langs[id], name: evn.target.value },
+        ...langs.slice(id + 1, langs.length)
       ]);
     }
     if (field === "level") {
       setLangs([
-        ...langs.filter(e => e.id !== id),
-        { ...langs[id], level: evn.target.value }
+        ...langs.slice(0, id),
+        { ...langs[id], level: evn.target.value },
+        ...langs.slice(id + 1, langs.length)
       ]);
     }
   };
@@ -692,81 +688,90 @@ export default function ProductSection() {
   const handlePubs = (field, id, evn) => {
     if (field === "title") {
       setPubs([
-        ...pubs.filter(e => e.id !== id),
-        { ...pubs[id], title: evn.target.value }
+        ...pubs.slice(0, id),
+        { ...pubs[id], title: evn.target.value },
+        ...pubs.slice(id + 1, pubs.length)
       ]);
     }
     if (field === "journal_name") {
       setPubs([
-        ...pubs.filter(e => e.id !== id),
-        { ...pubs[id], journal_name: evn.target.value }
+        ...pubs.slice(0, id),
+        { ...pubs[id], journal_name: evn.target.value },
+        ...pubs.slice(id + 1, pubs.length)
       ]);
     }
     if (field === "supervisor") {
       setPubs([
-        ...pubs.filter(e => e.id !== id),
-        { ...pubs[id], supervisor: evn.target.value }
+        ...pubs.slice(0, id),
+        { ...pubs[id], supervisor: evn.target.value },
+        ...pubs.slice(id + 1, pubs.length)
       ]);
     }
     if (field === "publish_date") {
       setPubs([
-        ...pubs.filter(e => e.id !== id),
-        { ...pubs[id], publish_date: evn }
+        ...pubs.slice(0, id),
+        { ...pubs[id], publish_date: evn },
+        ...pubs.slice(id + 1, pubs.length)
       ]);
     }
     if (field === "article_link") {
       setPubs([
-        ...pubs.filter(e => e.id !== id),
-        { ...pubs[id], article_link: evn.target.value }
+        ...pubs.slice(0, id),
+        { ...pubs[id], article_link: evn.target.value },
+        ...pubs.slice(id + 1, pubs.length)
       ]);
     }
   };
 
-
-
   const handleExps = (field, id, evn) => {
     if (field === "company_url") {
       setExps([
-        ...exps.filter(e => e.id !== id),
-        { ...exps[id], company_url: evn.target.value }
+        ...exps.slice(0, id),
+        { ...exps[id], company_url: evn.target.value },
+        ...exps.slice(id + 1, exps.length)
       ]);
     }
     if (field === "position") {
       setExps([
         ...exps.slice(0, id),
-        { ...exps[id], position: evn.target.value }
+        { ...exps[id], position: evn.target.value },
+        ...exps.slice(id + 1, exps.length)
       ]);
     }
     if (field === "company") {
       setExps([
-        ...exps.filter(e => e.id !== id),
-        { ...exps[id], company: evn.target.value }
+        ...exps.slice(0, id),
+        { ...exps[id], company: evn.target.value },
+        ...exps.slice(id + 1, exps.length)
       ]);
     }
     if (field === "start") {
       setExps([
-        ...exps.filter(e => e.id !== id),
+        ...exps.slice(0, id),
         {
           ...exps[id],
           duration: { start: evn, end: exps[id].duration.end },
           timeline: evn + "-" + exps[id].duration.end
-        }
+        },
+        ...exps.slice(id + 1, exps.length)
       ]);
     }
     if (field === "end") {
       setExps([
-        ...exps.filter(e => e.id !== id),
+        ...exps.slice(0, id),
         {
           ...exps[id],
           duration: { start: exps[id].duration.start, end: evn },
           timeline: exps[id].duration.start + "-" + evn
-        }
+        },
+        ...exps.slice(id + 1, exps.length)
       ]);
     }
     if (field === "summary") {
       setExps([
-        ...exps.filter(e => e.id !== id),
-        { ...exps[id], summary: evn.target.value }
+        ...exps.slice(0, id),
+        { ...exps[id], summary: evn.target.value },
+        ...exps.slice(id + 1, exps.length)
       ]);
     }
   };
@@ -774,46 +779,52 @@ export default function ProductSection() {
   const handleEdus = (field, id, evn) => {
     if (field === "college_name") {
       setEdus([
-        ...edus.filter(e => e.id !== id),
-        { ...edus[id], college_name: evn.target.value }
+        ...edus.slice(0, id),
+        { ...edus[id], college_name: evn.target.value },
+        ...edus.slice(id + 1, edus.length)
       ]);
     }
     if (field === "degree_name") {
       setEdus([
-        ...edus.filter(e => e.id !== id),
-        { ...edus[id], degree_name: evn.target.value }
+        ...edus.slice(0, id),
+        { ...edus[id], degree_name: evn.target.value },
+        ...edus.slice(id + 1, edus.length)
       ]);
     }
     if (field === "college_url") {
       setEdus([
-        ...edus.filter(e => e.id !== id),
-        { ...edus[id], college_url: evn.target.value }
+        ...edus.slice(0, id),
+        { ...edus[id], college_url: evn.target.value },
+        ...edus.slice(id + 1, edus.length)
       ]);
     }
     if (field === "summary") {
       setEdus([
-        ...edus.filter(e => e.id !== id),
-        { ...edus[id], summary: evn.target.value }
+        ...edus.slice(0, id),
+        { ...edus[id], summary: evn.target.value },
+        ...edus.slice(id + 1, edus.length)
       ]);
     }
     if (field === "start") {
       setEdus([
-        ...edus.filter(e => e.id !== id),
+        ...edus.slice(0, id),
         {
           ...edus[id],
           duration: { start: evn, end: edus[id].duration.end },
           timeline: evn + "-" + edus[id].duration.end
-        }
+        },
+        ...edus.slice(id + 1, edus.length)
       ]);
     }
     if (field === "end") {
       setEdus([
-        ...edus.filter(e => e.id !== id),
+        ...edus.slice(0, id),
         {
           ...edus[id],
           duration: { start: edus[id].duration.start, end: evn },
           timeline: edus[id].duration.start + "-" + evn
-        }
+        },
+        ...edus.slice(id + 1, edus.length)
       ]);
     }
   };
@@ -821,26 +832,30 @@ export default function ProductSection() {
   const handleAchs = (field, id, evn) => {
     if (field === "achievement_title") {
       setAchs([
-        ...achs.filter(e => e.id !== id),
-        { ...achs[id], achievement_title: evn.target.value }
+        ...achs.slice(0, id),
+        { ...achs[id], achievement_title: evn.target.value },
+        ...achs.slice(id + 1, achs.length)
       ]);
     }
     if (field === "achievement_description") {
       setAchs([
-        ...achs.filter(e => e.id !== id),
-        { ...achs[id], achievement_description: evn.target.value }
+        ...achs.slice(0, id),
+        { ...achs[id], achievement_description: evn.target.value },
+        ...achs.slice(id + 1, achs.length)
       ]);
     }
     if (field === "achievement_date") {
       setAchs([
-        ...achs.filter(e => e.id !== id),
-        { ...achs[id], achievement_date: evn }
+        ...achs.slice(0, id),
+        { ...achs[id], achievement_date: evn },
+        ...achs.slice(id + 1, achs.length)
       ]);
     }
     if (field === "achievement_url") {
       setAchs([
-        ...achs.filter(e => e.id !== id),
-        { ...achs[id], achievement_url: evn.target.value }
+        ...achs.slice(0, id),
+        { ...achs[id], achievement_url: evn.target.value },
+        ...achs.slice(id + 1, achs.length)
       ]);
     }
   };
@@ -848,26 +863,30 @@ export default function ProductSection() {
   const handlePros = (field, id, evn) => {
     if (field === "git_url") {
       setPros([
-        ...pros.filter(e => e.id !== id),
-        { ...pros[id], git_url: evn.target.value }
+        ...pros.slice(0, id),
+        { ...pros[id], git_url: evn.target.value },
+        ...pros.slice(id + 1, pros.length)
       ]);
     }
     if (field === "title") {
       setPros([
-        ...pros.filter(e => e.id !== id),
-        { ...pros[id], title: evn.target.value }
+        ...pros.slice(0, id),
+        { ...pros[id], title: evn.target.value },
+        ...pros.slice(id + 1, pros.length)
       ]);
     }
     if (field === "proj_desc") {
       setPros([
-        ...pros.filter(e => e.id !== id),
-        { ...pros[id], proj_desc: evn.target.value }
+        ...pros.slice(0, id),
+        { ...pros[id], proj_desc: evn.target.value },
+        ...pros.slice(id + 1, pros.length)
       ]);
     }
     if (field === "proj_demo") {
       setPros([
-        ...pros.filter(e => e.id !== id),
-        { ...pros[id], proj_demo: evn.target.value }
+        ...pros.slice(0, id),
+        { ...pros[id], proj_demo: evn.target.value },
+        ...pros.slice(id + 1, pros.length)
       ]);
     }
     if (field === "proj_image") {
@@ -883,12 +902,14 @@ export default function ProductSection() {
         "state_changed",
         snapshot => {
           // progress function ...
+          // eslint-disable-next-line no-unused-vars
           const progress = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
           setPros([
-            ...pros.filter(e => e.id !== id),
-            { ...pros[id], proj_image: "loading" }
+            ...pros.slice(0, id),
+            { ...pros[id], proj_image: "loading" },
+            ...pros.slice(id + 1, pros.length)
           ]);
         },
         error => {
@@ -903,8 +924,9 @@ export default function ProductSection() {
             .getDownloadURL()
             .then(url => {
               setPros([
-                ...pros.filter(e => e.id !== id),
-                { ...pros[id], proj_image: url }
+                ...pros.slice(0, id),
+                { ...pros[id], proj_image: url },
+                ...pros.slice(id + 1, pros.length)
               ]);
             });
         }
@@ -980,7 +1002,11 @@ export default function ProductSection() {
                         <div className="Tilt-inner">
                           <Card className={classes.root}>
                             <CardActionArea onClick={e => handleTemplate(1, e)}>
-                              <img src={template2} style={{ width: "100%" }} />
+                              <img
+                                src={template2}
+                                alt="Theme 1"
+                                style={{ width: "100%" }}
+                              />
                               <CardContent>
                                 <Typography
                                   gutterBottom
@@ -1006,6 +1032,7 @@ export default function ProductSection() {
                               <a
                                 href="https://d2c1dleky96i4z.cloudfront.net/janedoe-gmail-com.html"
                                 target="_blank"
+                                rel="noopener noreferrer"
                               >
                                 <Button size="small" color="primary">
                                   Live Demo
@@ -1037,7 +1064,11 @@ export default function ProductSection() {
                         <div className="Tilt-inner">
                           <Card className={classes.root}>
                             <CardActionArea onClick={e => handleTemplate(2, e)}>
-                              <img src={template1} style={{ width: "100%" }} />
+                              <img
+                                src={template1}
+                                alt="Theme 2"
+                                style={{ width: "100%" }}
+                              />
                               <CardContent>
                                 <Typography
                                   gutterBottom
@@ -1063,6 +1094,7 @@ export default function ProductSection() {
                               <a
                                 href="https://d2c1dleky96i4z.cloudfront.net/johndoe-gmail-com.html"
                                 target="_blank"
+                                rel="noopener noreferrer"
                               >
                                 <Button size="small" color="primary">
                                   Live Demo
@@ -1092,7 +1124,7 @@ export default function ProductSection() {
                           <TextField
                             id="fullname"
                             label="Name"
-                            style={{ margin: 8 }}
+                            style={{ margin: 8, marginLeft: "0px" }}
                             placeholder="Enter your full name"
                             required
                             fullWidth
@@ -1103,11 +1135,10 @@ export default function ProductSection() {
                             variant="outlined"
                             value={profileName}
                             onChange={handleChangeName}
-                            style={{ marginLeft: "0px" }}
                           />
                           <TextField
                             label="About Me"
-                            style={{ margin: 8 }}
+                            style={{ margin: 8, marginLeft: "0px" }}
                             fullWidth
                             id="aboutme"
                             multiline
@@ -1117,7 +1148,6 @@ export default function ProductSection() {
                             value={aboutMe}
                             required
                             onChange={handleChangeAbout}
-                            style={{ marginLeft: "0px" }}
                           />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
@@ -1461,15 +1491,16 @@ export default function ProductSection() {
                           key={el.id}
                         >
                           <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.numbering}>{el.id}.</h2>
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
                             <h2 className={classes.delete}>
                               <Button
                                 color="secondary"
                                 onClick={() => deleteSkill(el.id)}
                               >
-                                <img src={cancel} style={{ width: "30px" }} />
+                                <img
+                                  src={cancel}
+                                  alt="cancel"
+                                  style={{ width: "30px" }}
+                                />
                               </Button>
                             </h2>
                           </GridItem>
@@ -1540,15 +1571,16 @@ export default function ProductSection() {
                           className={classes.contentCard}
                         >
                           <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.numbering}>{el.id}.</h2>
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
                             <h2 className={classes.delete}>
                               <Button
                                 color="secondary"
                                 onClick={() => deleteTest(el.id)}
                               >
-                                <img src={cancel} style={{ width: "30px" }} />{" "}
+                                <img
+                                  src={cancel}
+                                  alt="cancel"
+                                  style={{ width: "30px" }}
+                                />{" "}
                               </Button>
                             </h2>
                           </GridItem>
@@ -1622,15 +1654,16 @@ export default function ProductSection() {
                           className={classes.contentCard}
                         >
                           <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.numbering}>{el.id}.</h2>
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
                             <h2 className={classes.delete}>
                               <Button
                                 color="secondary"
                                 onClick={() => deleteLang(el.id)}
                               >
-                                <img src={cancel} style={{ width: "30px" }} />{" "}
+                                <img
+                                  src={cancel}
+                                  alt="cancel"
+                                  style={{ width: "30px" }}
+                                />{" "}
                               </Button>
                             </h2>
                           </GridItem>
@@ -1738,15 +1771,16 @@ export default function ProductSection() {
                           className={classes.contentCard}
                         >
                           <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.numbering}>{el.id}.</h2>
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
                             <h2 className={classes.delete}>
                               <Button
                                 color="secondary"
                                 onClick={() => deletePub(el.id)}
                               >
-                                <img src={cancel} style={{ width: "30px" }} />{" "}
+                                <img
+                                  src={cancel}
+                                  alt="cancel"
+                                  style={{ width: "30px" }}
+                                />{" "}
                               </Button>
                             </h2>
                           </GridItem>
@@ -1851,15 +1885,16 @@ export default function ProductSection() {
                           className={classes.contentCard}
                         >
                           <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.numbering}>{el.id}.</h2>
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
                             <h2 className={classes.delete}>
                               <Button
                                 color="secondary"
                                 onClick={() => deleteExp(el.id)}
                               >
-                                <img src={cancel} style={{ width: "30px" }} />{" "}
+                                <img
+                                  src={cancel}
+                                  alt="cancel"
+                                  style={{ width: "30px" }}
+                                />{" "}
                               </Button>
                             </h2>
                           </GridItem>
@@ -1985,15 +2020,16 @@ export default function ProductSection() {
                           className={classes.contentCard}
                         >
                           <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.numbering}>{el.id}.</h2>
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
                             <h2 className={classes.delete}>
                               <Button
                                 color="secondary"
                                 onClick={() => deleteEdu(el.id)}
                               >
-                                <img src={cancel} style={{ width: "30px" }} />{" "}
+                                <img
+                                  src={cancel}
+                                  alt="cancel"
+                                  style={{ width: "30px" }}
+                                />{" "}
                               </Button>
                             </h2>
                           </GridItem>
@@ -2117,15 +2153,16 @@ export default function ProductSection() {
                           className={classes.contentCard}
                         >
                           <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.numbering}>{el.id}.</h2>
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
                             <h2 className={classes.delete}>
                               <Button
                                 color="secondary"
                                 onClick={() => deleteAch(el.id)}
                               >
-                                <img src={cancel} style={{ width: "30px" }} />{" "}
+                                <img
+                                  src={cancel}
+                                  alt="cancel"
+                                  style={{ width: "30px" }}
+                                />{" "}
                               </Button>
                             </h2>
                           </GridItem>
@@ -2228,15 +2265,16 @@ export default function ProductSection() {
                           key={el.id}
                         >
                           <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.numbering}>{el.id}.</h2>
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
                             <h2 className={classes.delete}>
                               <Button
                                 color="secondary"
                                 onClick={() => deleteProj(el.id)}
                               >
-                                <img src={cancel} style={{ width: "30px" }} />{" "}
+                                <img
+                                  src={cancel}
+                                  alt="cancel"
+                                  style={{ width: "30px" }}
+                                />{" "}
                               </Button>
                             </h2>
                           </GridItem>
@@ -2283,10 +2321,6 @@ export default function ProductSection() {
                               }}
                             />
                             <div style={{ margin: "25px" }}>
-                              <h4
-                                style={{ color: "#388E3C" }}
-                                id="projProgress"
-                              ></h4>
                               {pros[el.id - 1].proj_image === "" ? (
                                 <label
                                   htmlFor={`fileUpload` + el.id}
@@ -2306,6 +2340,7 @@ export default function ProductSection() {
                               ) : (
                                 <img
                                   src={pros[el.id - 1].proj_image}
+                                  alt="Project"
                                   style={{ maxWidth: "100%" }}
                                 />
                               )}
@@ -2415,7 +2450,7 @@ export default function ProductSection() {
             <DialogContentText id="alert-dialog-slide-description">
               {!response ? (
                 <h1 style={{ textAlign: "center" }}>
-                  <img src={design}></img>
+                  <img src={design} alt="design" />
                 </h1>
               ) : (
                 <div style={{ textAlign: "center" }}>

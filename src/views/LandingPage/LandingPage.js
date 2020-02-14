@@ -28,14 +28,10 @@ import axios from "axios";
 import loginImg from "../../assets/img/login.png";
 
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
 const dashboardRoutes = [];
 
 const useStyles = makeStyles(styles);
@@ -44,7 +40,7 @@ export default function LandingPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const [email, setEmail] = React.useState("example@bits.com");
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
 
   const responseGoogle = response => {
@@ -197,7 +193,7 @@ export default function LandingPage(props) {
                   style={{padding: "20px", marginBottom: '100px' }}
                 >
                   {matches ? (
-                    <img src={loginImg} style={{ width: "100%" }} />
+                    <img src={loginImg} alt="login" style={{ width: "100%" }} />
                   ) : null}
                 </GridItem>
               </GridContainer>
