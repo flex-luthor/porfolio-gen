@@ -40,7 +40,7 @@ export default function LandingPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const [email, setEmail] = React.useState("example@bits.com");
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
   const responseGoogle = response => {

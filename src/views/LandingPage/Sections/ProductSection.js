@@ -212,7 +212,7 @@ export default function ProductSection() {
     return day + " " + monthNames[monthIndex] + " " + year;
   }
 
-  const [activeStep, setActiveStep] = React.useState(2);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = React.useState(0);
   const [open, setOpen] = React.useState(false);
 
