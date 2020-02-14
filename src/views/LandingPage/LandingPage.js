@@ -69,6 +69,8 @@ export default function LandingPage(props) {
   };
 
   const matches = useMediaQuery("(min-width:960px)");
+  const phone = useMediaQuery("(max-width:600px)");
+
 
   return (
     <div>
@@ -78,7 +80,10 @@ export default function LandingPage(props) {
         brand="Portfolio Generator"
         rightLinks={<HeaderLinks />}
         fixed
-        changeColorOnScroll={{
+        changeColorOnScroll={phone ? {
+          height: 50,
+          color: "white"
+        } : {
           height: 400,
           color: "white"
         }}
