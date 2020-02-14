@@ -16,6 +16,7 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
 
 import GoogleLogin from "react-google-login";
+import Tilt from "react-tilt";
 
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
@@ -24,6 +25,16 @@ import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import ProductSection from "./Sections/ProductSection.js";
 import { Link } from "react-scroll";
 import axios from "axios";
+import loginImg from "../../assets/img/login.png";
+
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@material-ui/core/Typography";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const dashboardRoutes = [];
 
@@ -34,6 +45,7 @@ export default function LandingPage(props) {
   const { ...rest } = props;
   const [email, setEmail] = React.useState("example@bits.com");
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const responseGoogle = response => {
     console.log(response.profileObj.email);
@@ -59,6 +71,8 @@ export default function LandingPage(props) {
         setIsLoggedIn(true);
       });
   };
+
+  const matches = useMediaQuery("(min-width:960px)");
 
   return (
     <div>
@@ -117,13 +131,76 @@ export default function LandingPage(props) {
           {isLoggedIn ? (
             <ProductSection />
           ) : (
-            <div>
-              <GoogleLogin
-                clientId="356883126789-kr191fl5f5odmmb8c9lr0dspapq41rlb.apps.googleusercontent.com"
-                buttonText="Login with Google"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-              />
+            <div className={classes.section}>
+              <GridContainer justify="center">
+                <GridItem xs={12} sm={12} md={12} style={{textAlign: 'center'}}>
+                  <h1 className={classes.title} style={{color: "#222", marginTop: "100px",}}>Hey there.</h1>
+                </GridItem>
+                <GridItem
+                  xs={12}
+                  sm={12}
+                  md={6}
+                >
+                  <Tilt
+                    className="Tilt"
+                    options={{ max: 25 }}
+                    // style={{ height: 250, width: 250 }}
+                    glare={true}
+                  >
+                    <div className="Tilt-inner">
+                      <Card
+                        className={classes.root}
+                        style={{ textAlign: "center", margin: "15vh 0", minWidth: "200px", boxShadow: "0 6px 20px rgba(200, 230, 201, 0.5)" }}
+                        
+                      >
+                        <CardContent>
+                          <Typography
+                            variant="h5"
+                            component="h2"
+                            style={{ color: "#388E3C" }}
+                          >
+                            Login to continue
+                          </Typography>
+                          <div
+                            style={{ marginTop: "25px", marginBottom: "10px" }}
+                          >
+                            {loading ? (
+                              <CircularProgress style={{ color: "green" }} />
+                            ) : (
+                              <div onClick={() => setLoading(true)}>
+                                <GoogleLogin
+                                  clientId="356883126789-kr191fl5f5odmmb8c9lr0dspapq41rlb.apps.googleusercontent.com"
+                                  buttonText="Login with Google"
+                                  onSuccess={responseGoogle}
+                                  onFailure={responseGoogle}
+                                />
+                              </div>
+                            )}
+                          </div>
+                          <Typography
+                            variant="body2"
+                            style={{ color: "#aaa", padding: "5px 15px" }}
+                          >
+                            By continuing, I agree that I am at least 13 years
+                            old and have read and agree to Terms of Service and
+                            Privacy Policy.
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </Tilt>
+                </GridItem>
+                <GridItem
+                  xs={12}
+                  sm={12}
+                  md={6}
+                  style={{padding: "20px", marginBottom: '100px' }}
+                >
+                  {matches ? (
+                    <img src={loginImg} style={{ width: "100%" }} />
+                  ) : null}
+                </GridItem>
+              </GridContainer>
             </div>
           )}
         </div>

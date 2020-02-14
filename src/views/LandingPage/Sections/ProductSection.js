@@ -71,6 +71,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookf, fas } from "@fortawesome/free-solid-svg-icons";
 
+import Tilt from "react-tilt";
+
 import linkedIn from "../../../assets/img/i.png";
 import github from "../../../assets/img/g.png";
 import email from "../../../assets/img/e.png";
@@ -232,7 +234,7 @@ export default function ProductSection() {
     return day + " " + monthNames[monthIndex] + " " + year;
   }
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3);
   const [loading, setLoading] = React.useState(0);
   const [open, setOpen] = React.useState(false);
 
@@ -288,7 +290,7 @@ export default function ProductSection() {
         start: formatDate(new Date("2014-08-18T21:11:54")),
         end: formatDate(new Date("2015-08-17T21:11:54"))
       },
-      timeline: "",
+      timeline: "18 August 2014 - 17 August 2015",
       summary: ""
     }
   ]);
@@ -303,7 +305,7 @@ export default function ProductSection() {
         start: formatDate(new Date("2014-08-18T21:11:54")),
         end: formatDate(new Date("2014-08-18T21:11:54"))
       },
-      timeline: ""
+      timeline: "18 August 2014 - 17 August 2015"
     }
   ]);
   const [achs, setAchs] = React.useState([
@@ -495,7 +497,7 @@ export default function ProductSection() {
             start: formatDate(new Date("2014-08-18T21:11:54")),
             end: formatDate(new Date("2014-08-18T21:11:54"))
           },
-          timeline: "",
+          timeline: "18 August 2014 - 17 August 2015",
           summary: ""
         }
       ];
@@ -522,7 +524,7 @@ export default function ProductSection() {
             start: formatDate(new Date("2014-08-18T21:11:54")),
             end: formatDate(new Date("2014-08-18T21:11:54"))
           },
-          timeline: ""
+          timeline: "18 August 2014 - 17 August 2015"
         }
       ];
     });
@@ -639,13 +641,13 @@ export default function ProductSection() {
   const handleSkills = (field, id, evn) => {
     if (field === "skill_name") {
       setSkills([
-        ...skills.slice(0, id),
+        ...skills.filter(e => e.id !== id),
         { ...skills[id], skill_name: evn.target.value }
       ]);
     }
     if (field === "skill_level") {
       setSkills([
-        ...skills.slice(0, id),
+        ...skills.filter(e => e.id !== id),
         { ...skills[id], skill_level: evn.target.value }
       ]);
     }
@@ -654,19 +656,19 @@ export default function ProductSection() {
   const handleTests = (field, id, evn) => {
     if (field === "testimonial_name") {
       setTests([
-        ...tests.slice(0, id),
+        ...tests.filter(e => e.id !== id),
         { ...tests[id], testimonial_name: evn.target.value }
       ]);
     }
     if (field === "testimonial_cred") {
       setTests([
-        ...tests.slice(0, id),
+        ...tests.filter(e => e.id !== id),
         { ...tests[id], testimonial_cred: evn.target.value }
       ]);
     }
     if (field === "testimonial_desc") {
       setTests([
-        ...tests.slice(0, id),
+        ...tests.filter(e => e.id !== id),
         { ...tests[id], testimonial_desc: evn.target.value }
       ]);
     }
@@ -675,13 +677,13 @@ export default function ProductSection() {
   const handleLangs = (field, id, evn) => {
     if (field === "name") {
       setLangs([
-        ...langs.slice(0, id),
+        ...langs.filter(e => e.id !== id),
         { ...langs[id], name: evn.target.value }
       ]);
     }
     if (field === "level") {
       setLangs([
-        ...langs.slice(0, id),
+        ...langs.filter(e => e.id !== id),
         { ...langs[id], level: evn.target.value }
       ]);
     }
@@ -689,35 +691,43 @@ export default function ProductSection() {
 
   const handlePubs = (field, id, evn) => {
     if (field === "title") {
-      setPubs([...pubs.slice(0, id), { ...pubs[id], title: evn.target.value }]);
+      setPubs([
+        ...pubs.filter(e => e.id !== id),
+        { ...pubs[id], title: evn.target.value }
+      ]);
     }
     if (field === "journal_name") {
       setPubs([
-        ...pubs.slice(0, id),
+        ...pubs.filter(e => e.id !== id),
         { ...pubs[id], journal_name: evn.target.value }
       ]);
     }
     if (field === "supervisor") {
       setPubs([
-        ...pubs.slice(0, id),
+        ...pubs.filter(e => e.id !== id),
         { ...pubs[id], supervisor: evn.target.value }
       ]);
     }
     if (field === "publish_date") {
-      setPubs([...langs.slice(0, id), { ...pubs[id], publish_date: evn }]);
+      setPubs([
+        ...pubs.filter(e => e.id !== id),
+        { ...pubs[id], publish_date: evn }
+      ]);
     }
     if (field === "article_link") {
       setPubs([
-        ...pubs.slice(0, id),
+        ...pubs.filter(e => e.id !== id),
         { ...pubs[id], article_link: evn.target.value }
       ]);
     }
   };
 
+
+
   const handleExps = (field, id, evn) => {
     if (field === "company_url") {
       setExps([
-        ...exps.slice(0, id),
+        ...exps.filter(e => e.id !== id),
         { ...exps[id], company_url: evn.target.value }
       ]);
     }
@@ -729,13 +739,13 @@ export default function ProductSection() {
     }
     if (field === "company") {
       setExps([
-        ...exps.slice(0, id),
+        ...exps.filter(e => e.id !== id),
         { ...exps[id], company: evn.target.value }
       ]);
     }
     if (field === "start") {
       setExps([
-        ...exps.slice(0, id),
+        ...exps.filter(e => e.id !== id),
         {
           ...exps[id],
           duration: { start: evn, end: exps[id].duration.end },
@@ -745,7 +755,7 @@ export default function ProductSection() {
     }
     if (field === "end") {
       setExps([
-        ...exps.slice(0, id),
+        ...exps.filter(e => e.id !== id),
         {
           ...exps[id],
           duration: { start: exps[id].duration.start, end: evn },
@@ -755,7 +765,7 @@ export default function ProductSection() {
     }
     if (field === "summary") {
       setExps([
-        ...exps.slice(0, id),
+        ...exps.filter(e => e.id !== id),
         { ...exps[id], summary: evn.target.value }
       ]);
     }
@@ -764,31 +774,31 @@ export default function ProductSection() {
   const handleEdus = (field, id, evn) => {
     if (field === "college_name") {
       setEdus([
-        ...edus.slice(0, id),
+        ...edus.filter(e => e.id !== id),
         { ...edus[id], college_name: evn.target.value }
       ]);
     }
     if (field === "degree_name") {
       setEdus([
-        ...edus.slice(0, id),
+        ...edus.filter(e => e.id !== id),
         { ...edus[id], degree_name: evn.target.value }
       ]);
     }
     if (field === "college_url") {
       setEdus([
-        ...edus.slice(0, id),
+        ...edus.filter(e => e.id !== id),
         { ...edus[id], college_url: evn.target.value }
       ]);
     }
     if (field === "summary") {
       setEdus([
-        ...edus.slice(0, id),
+        ...edus.filter(e => e.id !== id),
         { ...edus[id], summary: evn.target.value }
       ]);
     }
     if (field === "start") {
       setEdus([
-        ...edus.slice(0, id),
+        ...edus.filter(e => e.id !== id),
         {
           ...edus[id],
           duration: { start: evn, end: edus[id].duration.end },
@@ -798,7 +808,7 @@ export default function ProductSection() {
     }
     if (field === "end") {
       setEdus([
-        ...edus.slice(0, id),
+        ...edus.filter(e => e.id !== id),
         {
           ...edus[id],
           duration: { start: edus[id].duration.start, end: evn },
@@ -811,22 +821,25 @@ export default function ProductSection() {
   const handleAchs = (field, id, evn) => {
     if (field === "achievement_title") {
       setAchs([
-        ...achs.slice(0, id),
+        ...achs.filter(e => e.id !== id),
         { ...achs[id], achievement_title: evn.target.value }
       ]);
     }
     if (field === "achievement_description") {
       setAchs([
-        ...achs.slice(0, id),
+        ...achs.filter(e => e.id !== id),
         { ...achs[id], achievement_description: evn.target.value }
       ]);
     }
     if (field === "achievement_date") {
-      setAchs([...achs.slice(0, id), { ...achs[id], achievement_date: evn }]);
+      setAchs([
+        ...achs.filter(e => e.id !== id),
+        { ...achs[id], achievement_date: evn }
+      ]);
     }
     if (field === "achievement_url") {
       setAchs([
-        ...achs.slice(0, id),
+        ...achs.filter(e => e.id !== id),
         { ...achs[id], achievement_url: evn.target.value }
       ]);
     }
@@ -835,22 +848,25 @@ export default function ProductSection() {
   const handlePros = (field, id, evn) => {
     if (field === "git_url") {
       setPros([
-        ...pros.slice(0, id),
+        ...pros.filter(e => e.id !== id),
         { ...pros[id], git_url: evn.target.value }
       ]);
     }
     if (field === "title") {
-      setPros([...pros.slice(0, id), { ...pros[id], title: evn.target.value }]);
+      setPros([
+        ...pros.filter(e => e.id !== id),
+        { ...pros[id], title: evn.target.value }
+      ]);
     }
     if (field === "proj_desc") {
       setPros([
-        ...pros.slice(0, id),
+        ...pros.filter(e => e.id !== id),
         { ...pros[id], proj_desc: evn.target.value }
       ]);
     }
     if (field === "proj_demo") {
       setPros([
-        ...pros.slice(0, id),
+        ...pros.filter(e => e.id !== id),
         { ...pros[id], proj_demo: evn.target.value }
       ]);
     }
@@ -871,7 +887,7 @@ export default function ProductSection() {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
           setPros([
-            ...pros.slice(0, id),
+            ...pros.filter(e => e.id !== id),
             { ...pros[id], proj_image: "loading" }
           ]);
         },
@@ -886,7 +902,10 @@ export default function ProductSection() {
             .child(imageFb.name)
             .getDownloadURL()
             .then(url => {
-              setPros([...pros.slice(0, id), { ...pros[id], proj_image: url }]);
+              setPros([
+                ...pros.filter(e => e.id !== id),
+                { ...pros[id], proj_image: url }
+              ]);
             });
         }
       );
@@ -916,7 +935,7 @@ export default function ProductSection() {
   return (
     <div className={classes.section} id="top">
       <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={12}>
           {activeStep === 1 ? (
             <h2 className={classes.title}>Let{"'"}s Begin!</h2>
           ) : activeStep === 2 ? (
@@ -931,6 +950,7 @@ export default function ProductSection() {
               alternativeLabel
               activeStep={activeStep}
               connector={<QontoConnector />}
+              style={{ marginTop: "40px", marginBottom: "50px" }}
             >
               {steps.map(label => (
                 <Step key={label}>
@@ -952,48 +972,56 @@ export default function ProductSection() {
                       md={6}
                       style={{ marginTop: "50px" }}
                     >
-                      <Card className={classes.root}>
-                        <CardActionArea onClick={e => handleTemplate(1, e)}>
-                          <img src={template2} style={{ width: "100%" }} />
-                          <CardContent>
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="h2"
-                              style={{ color: "#222" }}
-                            >
-                              Nice and Simple
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                              component="p"
-                            >
-                              A classic and responsive portfolio theme for all
-                              your professional needs.
-                            </Typography>
-                            <br />
-                            <br />
-                          </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                          <a
-                            href="https://d2c1dleky96i4z.cloudfront.net/janedoe-gmail-com.html"
-                            target="_blank"
-                          >
-                            <Button size="small" color="primary">
-                              Live Demo
-                            </Button>
-                          </a>
-                          <Button
-                            size="small"
-                            color="primary"
-                            onClick={e => handleTemplate(1, e)}
-                          >
-                            Select
-                          </Button>
-                        </CardActions>
-                      </Card>
+                      <Tilt
+                        className="Tilt"
+                        options={{ max: 15, scale: 1.05 }}
+                        // style={{ height: 250, width: 250 }}
+                      >
+                        <div className="Tilt-inner">
+                          <Card className={classes.root}>
+                            <CardActionArea onClick={e => handleTemplate(1, e)}>
+                              <img src={template2} style={{ width: "100%" }} />
+                              <CardContent>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h2"
+                                  style={{ color: "#222" }}
+                                >
+                                  Nice and Simple
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                  component="p"
+                                >
+                                  A classic and responsive portfolio theme for
+                                  all your professional needs.
+                                </Typography>
+                                <br />
+                                <br />
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                              <a
+                                href="https://d2c1dleky96i4z.cloudfront.net/janedoe-gmail-com.html"
+                                target="_blank"
+                              >
+                                <Button size="small" color="primary">
+                                  Live Demo
+                                </Button>
+                              </a>
+                              <Button
+                                size="small"
+                                color="primary"
+                                onClick={e => handleTemplate(1, e)}
+                              >
+                                Select
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </div>
+                      </Tilt>
                     </GridItem>
                     <GridItem
                       xs={12}
@@ -1001,48 +1029,56 @@ export default function ProductSection() {
                       md={6}
                       style={{ marginTop: "50px" }}
                     >
-                      <Card className={classes.root}>
-                        <CardActionArea onClick={e => handleTemplate(2, e)}>
-                          <img src={template1} style={{ width: "100%" }} />
-                          <CardContent>
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="h2"
-                              style={{ color: "#222" }}
-                            >
-                              Ronaldo
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              color="textSecondary"
-                              component="p"
-                            >
-                              Ronaldo is an all-around free one page personal
-                              website template for creative individuals,
-                              professionals and job seekers.
-                            </Typography>
-                            <br />
-                          </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                          <a
-                            href="https://d2c1dleky96i4z.cloudfront.net/johndoe-gmail-com.html"
-                            target="_blank"
-                          >
-                            <Button size="small" color="primary">
-                              Live Demo
-                            </Button>
-                          </a>
-                          <Button
-                            size="small"
-                            color="primary"
-                            onClick={e => handleTemplate(2, e)}
-                          >
-                            Select
-                          </Button>
-                        </CardActions>
-                      </Card>
+                      <Tilt
+                        className="Tilt"
+                        options={{ max: 15, scale: 1.05 }}
+                        // style={{ height: 250, width: 250 }}
+                      >
+                        <div className="Tilt-inner">
+                          <Card className={classes.root}>
+                            <CardActionArea onClick={e => handleTemplate(2, e)}>
+                              <img src={template1} style={{ width: "100%" }} />
+                              <CardContent>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h2"
+                                  style={{ color: "#222" }}
+                                >
+                                  Ronaldo
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                  component="p"
+                                >
+                                  Ronaldo is an all-around free one page
+                                  personal website template for creative
+                                  individuals, professionals and job seekers.
+                                </Typography>
+                                <br />
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                              <a
+                                href="https://d2c1dleky96i4z.cloudfront.net/johndoe-gmail-com.html"
+                                target="_blank"
+                              >
+                                <Button size="small" color="primary">
+                                  Live Demo
+                                </Button>
+                              </a>
+                              <Button
+                                size="small"
+                                color="primary"
+                                onClick={e => handleTemplate(2, e)}
+                              >
+                                Select
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </div>
+                      </Tilt>
                     </GridItem>
                   </GridContainer>
                 </ThemeProvider>
@@ -2030,6 +2066,9 @@ export default function ProductSection() {
                               fullWidth
                               margin="normal"
                               variant="outlined"
+                              onChange={e => {
+                                handleEdus("college_url", el.id - 1, e);
+                              }}
                             />
                             <TextField
                               label="Summary"
@@ -2039,6 +2078,9 @@ export default function ProductSection() {
                               rows="4"
                               placeholder="Tell us about your education"
                               variant="outlined"
+                              onChange={e => {
+                                handleEdus("summary", el.id - 1, e);
+                              }}
                             />
                             )}
                           </GridItem>

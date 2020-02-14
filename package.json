@@ -35,7 +35,8 @@
     "react-scroll": "^1.7.16",
     "react-slick": "0.25.2",
     "react-swipeable-views": "0.13.3",
-    "react-table": "^7.0.0-rc.15"
+    "react-table": "^7.0.0-rc.15",
+    "react-tilt": "^0.1.4"
   },
   "devDependencies": {
     "@babel/cli": "7.5.5",
