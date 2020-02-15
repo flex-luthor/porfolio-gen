@@ -205,11 +205,13 @@ export default function ProductSection() {
       "November",
       "December"
     ];
-    var day = date.getDate();
-    var monthIndex = date.getMonth();
-    var year = date.getFullYear();
 
-    return day + " " + monthNames[monthIndex] + " " + year;
+    if (date !== null) {
+      var day = date.getDate();
+      var monthIndex = date.getMonth();
+      var year = date.getFullYear();
+      return day + " " + monthNames[monthIndex] + " " + year;
+    } else return null;
   }
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -254,7 +256,7 @@ export default function ProductSection() {
       title: "",
       journal_name: "",
       supervisor: "",
-      publish_date: formatDate(new Date("2014-08-18T21:11:54")),
+      publish_date: formatDate(new Date("2019-08-18T21:11:54")),
       article_link: ""
     }
   ]);
@@ -265,10 +267,10 @@ export default function ProductSection() {
       position: "",
       company: "",
       duration: {
-        start: formatDate(new Date("2014-08-18T21:11:54")),
-        end: formatDate(new Date("2015-08-17T21:11:54"))
+        start: formatDate(new Date("2019-08-18T21:11:54")),
+        end: formatDate(new Date("2019-08-17T21:11:54"))
       },
-      timeline: "18 August 2014 - 17 August 2015",
+      timeline: "18 August 2019 - 17 August 2019",
       summary: ""
     }
   ]);
@@ -280,10 +282,10 @@ export default function ProductSection() {
       college_url: "",
       summary: "",
       duration: {
-        start: formatDate(new Date("2014-08-18T21:11:54")),
-        end: formatDate(new Date("2014-08-18T21:11:54"))
+        start: formatDate(new Date("2019-08-18T21:11:54")),
+        end: formatDate(new Date("2019-08-18T21:11:54"))
       },
-      timeline: "18 August 2014 - 17 August 2015"
+      timeline: "18 August 2019 - 17 August 2019"
     }
   ]);
   const [achs, setAchs] = React.useState([
@@ -291,7 +293,7 @@ export default function ProductSection() {
       id: 1,
       achievement_title: "",
       achievement_description: "",
-      achievement_date: formatDate(new Date("2014-08-18T21:11:54")),
+      achievement_date: formatDate(new Date("2019-08-18T21:11:54")),
       achievement_url: ""
     }
   ]);
@@ -455,7 +457,7 @@ export default function ProductSection() {
           title: "",
           journal_name: "",
           supervisor: "",
-          publish_date: formatDate(new Date("2014-08-18T21:11:54")),
+          publish_date: formatDate(new Date("2019-08-18T21:11:54")),
           article_link: ""
         }
       ];
@@ -479,10 +481,10 @@ export default function ProductSection() {
           position: "",
           company: "",
           duration: {
-            start: formatDate(new Date("2014-08-18T21:11:54")),
-            end: formatDate(new Date("2014-08-18T21:11:54"))
+            start: formatDate(new Date("2019-08-18T21:11:54")),
+            end: formatDate(new Date("2019-08-18T21:11:54"))
           },
-          timeline: "18 August 2014 - 17 August 2015",
+          timeline: "18 August 2019 - 17 August 2019",
           summary: ""
         }
       ];
@@ -507,10 +509,10 @@ export default function ProductSection() {
           college_url: "",
           summary: "",
           duration: {
-            start: formatDate(new Date("2014-08-18T21:11:54")),
-            end: formatDate(new Date("2014-08-18T21:11:54"))
+            start: formatDate(new Date("2019-08-18T21:11:54")),
+            end: formatDate(new Date("2019-08-18T21:11:54"))
           },
-          timeline: "18 August 2014 - 17 August 2015"
+          timeline: "18 August 2019 - 17 August 2019"
         }
       ];
     });
@@ -531,7 +533,7 @@ export default function ProductSection() {
           id: achNum,
           achievement_title: "",
           achievement_description: "",
-          achievement_date: formatDate(new Date("2014-08-18T21:11:54")),
+          achievement_date: formatDate(new Date("2019-08-18T21:11:54")),
           achievement_url: ""
         }
       ];
@@ -1127,6 +1129,7 @@ export default function ProductSection() {
                             style={{ margin: 8, marginLeft: "0px" }}
                             placeholder="Enter your full name"
                             required
+                            autoFocus
                             fullWidth
                             margin="normal"
                             InputLabelProps={{
@@ -1510,6 +1513,7 @@ export default function ProductSection() {
                                 className: classes.input
                               }}
                               label="Skill Description"
+                              autoFocus
                               required
                               style={{ margin: 8 }}
                               fullWidth
@@ -1590,6 +1594,7 @@ export default function ProductSection() {
                               style={{ margin: 8 }}
                               fullWidth
                               required
+                              autoFocus={el.id === 1 ? false : true}
                               margin="normal"
                               onChange={e => {
                                 handleTests("testimonial_name", el.id - 1, e);
@@ -1670,6 +1675,7 @@ export default function ProductSection() {
                           <GridItem xs={12} sm={12} md={8}>
                             <TextField
                               label="Language"
+                              autoFocus={el.id === 1 ? false : true}
                               style={{ margin: 8 }}
                               fullWidth
                               required
@@ -1787,6 +1793,7 @@ export default function ProductSection() {
                           <GridItem xs={12} sm={12} md={6}>
                             <TextField
                               label="Title"
+                              autoFocus
                               style={{ margin: 8 }}
                               fullWidth
                               required
@@ -1901,6 +1908,7 @@ export default function ProductSection() {
                           <GridItem xs={12} sm={12} md={6}>
                             <TextField
                               label="Company"
+                              autoFocus={el.id === 1 ? false : true}
                               style={{ margin: 8 }}
                               fullWidth
                               required
@@ -2019,24 +2027,27 @@ export default function ProductSection() {
                           id={el.id}
                           className={classes.contentCard}
                         >
-                          <GridItem xs={12} sm={12} md={12}>
-                            <h2 className={classes.delete}>
-                              <Button
-                                color="secondary"
-                                onClick={() => deleteEdu(el.id)}
-                              >
-                                <img
-                                  src={cancel}
-                                  alt="cancel"
-                                  style={{ width: "30px" }}
-                                />{" "}
-                              </Button>
-                            </h2>
-                          </GridItem>
+                          {el.id !== 1 ? (
+                             <GridItem xs={12} sm={12} md={12}>
+                             <h2 className={classes.delete}>
+                               <Button
+                                 color="secondary"
+                                 onClick={() => deleteEdu(el.id)}
+                               >
+                                 <img
+                                   src={cancel}
+                                   alt="cancel"
+                                   style={{ width: "30px" }}
+                                 />{" "}
+                               </Button>
+                             </h2>
+                           </GridItem> 
+                          ) : null}
                           <GridItem xs={12} sm={12} md={6}>
                             <TextField
                               label="Institute Name"
                               style={{ margin: 8 }}
+                              autoFocus={el.id === 1 ? false : true}
                               fullWidth
                               required
                               margin="normal"
@@ -2169,6 +2180,7 @@ export default function ProductSection() {
                           <GridItem xs={12} sm={12} md={6}>
                             <TextField
                               label="Achievement Title"
+                              autoFocus={el.id === 1 ? false : true}
                               style={{ margin: 8 }}
                               fullWidth
                               required
@@ -2281,6 +2293,7 @@ export default function ProductSection() {
                           <GridItem xs={12} sm={12} md={6}>
                             <TextField
                               label="Title"
+                              autoFocus={el.id === 1 ? false : true}
                               style={{ margin: 8 }}
                               fullWidth
                               required

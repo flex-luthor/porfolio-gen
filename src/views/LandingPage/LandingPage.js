@@ -26,6 +26,7 @@ import ProductSection from "./Sections/ProductSection.js";
 import { Link } from "react-scroll";
 import axios from "axios";
 import loginImg from "../../assets/img/login.png";
+import { CookiesProvider } from 'react-cookie';
 
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -58,8 +59,8 @@ export default function LandingPage(props) {
       }
     })
       .then(res => {
-        console.log(json);
         console.log(res);
+
         setIsLoggedIn(true);
       })
       .catch(err => {
@@ -69,8 +70,7 @@ export default function LandingPage(props) {
   };
 
   const matches = useMediaQuery("(min-width:960px)");
-  const phone = useMediaQuery("(max-width:600px)");
-
+  const phone = useMediaQuery("(max-width:700px)");
 
   return (
     <div>
@@ -80,13 +80,17 @@ export default function LandingPage(props) {
         brand="Portfolio Generator"
         rightLinks={<HeaderLinks />}
         fixed
-        changeColorOnScroll={phone ? {
-          height: 50,
-          color: "white"
-        } : {
-          height: 400,
-          color: "white"
-        }}
+        changeColorOnScroll={
+          phone
+            ? {
+                height: 50,
+                color: "success"
+              }
+            : {
+                height: 400,
+                color: "white"
+              }
+        }
         {...rest}
       />
       <Parallax filter image={require("assets/img/landing-bg.jpg")}>
@@ -134,14 +138,20 @@ export default function LandingPage(props) {
           ) : (
             <div className={classes.section}>
               <GridContainer justify="center">
-                <GridItem xs={12} sm={12} md={12} style={{textAlign: 'center'}}>
-                  <h1 className={classes.title} style={{color: "#222", marginTop: "100px",}}>Hey there.</h1>
-                </GridItem>
                 <GridItem
                   xs={12}
                   sm={12}
-                  md={6}
+                  md={12}
+                  style={{ textAlign: "center" }}
                 >
+                  <h1
+                    className={classes.title}
+                    style={{ color: "#222", marginTop: "100px" }}
+                  >
+                    Hey there.
+                  </h1>
+                </GridItem>
+                <GridItem xs={12} sm={12} md={6}>
                   <Tilt
                     className="Tilt"
                     options={{ max: 25 }}
@@ -151,8 +161,14 @@ export default function LandingPage(props) {
                     <div className="Tilt-inner">
                       <Card
                         className={classes.root}
-                        style={{ textAlign: "center", margin: "15vh 0", minWidth: "200px", boxShadow: "0 6px 20px rgba(200, 230, 201, 0.5)" }}
-                        
+                        style={{
+                          textAlign: "center",
+                          margin: "15vh 0",
+                          minWidth: "200px",
+                          boxShadow: "0 6px 20px rgba(200, 230, 201, 0.5)",
+                          border: "2px #4CAF50 solid",
+                          borderRadius: "10px"
+                        }}
                       >
                         <CardContent>
                           <Typography
@@ -168,14 +184,19 @@ export default function LandingPage(props) {
                             {loading ? (
                               <CircularProgress style={{ color: "green" }} />
                             ) : (
-                              <div onClick={() => setLoading(true)}>
+                              <span onClick={() => {
+                                setLoading(true)
+                                setTimeout(() => {
+                                  setLoading(false);
+                                }, 10000);
+                                }}>
                                 <GoogleLogin
                                   clientId="356883126789-kr191fl5f5odmmb8c9lr0dspapq41rlb.apps.googleusercontent.com"
                                   buttonText="Login with Google"
                                   onSuccess={responseGoogle}
                                   onFailure={responseGoogle}
                                 />
-                              </div>
+                              </span>
                             )}
                           </div>
                           <Typography
@@ -195,7 +216,7 @@ export default function LandingPage(props) {
                   xs={12}
                   sm={12}
                   md={6}
-                  style={{padding: "20px", marginBottom: '100px' }}
+                  style={{ padding: "20px", marginBottom: "100px" }}
                 >
                   {matches ? (
                     <img src={loginImg} alt="login" style={{ width: "100%" }} />
